@@ -1,0 +1,2219 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Petualangan Detektif Pecahan - Matematika Kelas 5 SD</title>
+  <!-- Google Fonts & Tailwind CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@600;700;800;900&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            fredoka: ['Fredoka', 'system-ui', 'sans-serif'],
+            nunito: ['Nunito', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              yellow: '#FBBF24',
+              orange: '#F97316',
+              blue: '#0EA5E9',
+              sky: '#38BDF8',
+              green: '#10B981',
+              emerald: '#059669',
+              purple: '#8B5CF6',
+              pink: '#EC4899',
+              cream: '#FFFBEB',
+              dark: '#1E293B',
+            }
+          },
+          animation: {
+            'bounce-soft': 'bounceSoft 2s infinite',
+            'float': 'float 3s ease-in-out infinite',
+            'pulse-glow': 'pulseGlow 2s infinite',
+          },
+          keyframes: {
+            bounceSoft: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-8px)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-10px) rotate(2deg)' },
+            },
+            pulseGlow: {
+              '0%, 100%': { boxShadow: '0 0 15px rgba(251, 191, 36, 0.5)' },
+              '50%': { boxShadow: '0 0 25px rgba(249, 115, 22, 0.8)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html {
+      font-size: 18px;
+      transition: font-size 0.2s ease;
+    }
+
+    html.font-normal {
+      font-size: 18px;
+    }
+
+    html.font-large {
+      font-size: 21px;
+    }
+
+    html.font-huge {
+      font-size: 24px;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    .font-fun {
+      font-family: 'Fredoka', cursive, sans-serif;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 9999px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Confetti Canvas */
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .badge-pop {
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      from {
+        transform: scale(0.7);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body
+  class="bg-gradient-to-br from-amber-50 via-sky-50 to-emerald-50 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-brand-yellow selection:text-slate-900 text-base">
+
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- TOP APP BAR / HEADER -->
+  <header
+    class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b-4 border-amber-300 shadow-sm transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
+
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3.5 cursor-pointer" onclick="navigateTo('home')">
+        <div
+          class="w-13 h-13 p-2.5 bg-gradient-to-tr from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center text-white text-3xl shadow-md transform hover:rotate-6 transition-transform">
+          🔍
+        </div>
+        <div>
+          <div class="flex items-center gap-2.5">
+            <span
+              class="font-fun text-2xl sm:text-3xl font-extrabold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+              Detektif Pecahan
+            </span>
+            <span
+              class="hidden sm:inline-block bg-sky-100 text-sky-800 text-xs sm:text-sm font-black px-3 py-0.5 rounded-full border border-sky-300 shadow-xs">
+              KELAS 5 SD
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 font-bold hidden sm:block">Matematika: Memecahkan Soal Cerita
+            Pecahan</p>
+        </div>
+      </div>
+
+      <!-- Navigation Chips -->
+      <nav class="hidden lg:flex items-center gap-1.5 xl:gap-2">
+        <button onclick="navigateTo('home')"
+          class="nav-btn px-3.5 py-2 rounded-xl font-fun font-bold text-base transition-all duration-200 flex items-center gap-1.5 hover:bg-amber-100 text-slate-700"
+          data-page="home">
+          <span class="text-lg">🏠</span> Beranda
+        </button>
+        <button onclick="navigateTo('objectives')"
+          class="nav-btn px-3.5 py-2 rounded-xl font-fun font-bold text-base transition-all duration-200 flex items-center gap-1.5 hover:bg-sky-100 text-slate-700"
+          data-page="objectives">
+          <span class="text-lg">🎯</span> Misi Belajar
+        </button>
+        <button onclick="navigateTo('material')"
+          class="nav-btn px-3.5 py-2 rounded-xl font-fun font-bold text-base transition-all duration-200 flex items-center gap-1.5 hover:bg-emerald-100 text-slate-700"
+          data-page="material">
+          <span class="text-lg">💡</span> 4 Jurus
+        </button>
+        <button onclick="navigateTo('activity')"
+          class="nav-btn px-3.5 py-2 rounded-xl font-fun font-bold text-base transition-all duration-200 flex items-center gap-1.5 hover:bg-purple-100 text-slate-700"
+          data-page="activity">
+          <span class="text-lg">🧪</span> Lab Kasus
+        </button>
+        <button onclick="navigateTo('quiz')"
+          class="nav-btn px-3.5 py-2 rounded-xl font-fun font-bold text-base transition-all duration-200 flex items-center gap-1.5 hover:bg-pink-100 text-slate-700"
+          data-page="quiz">
+          <span class="text-lg">🏆</span> Kuis Detektif
+        </button>
+        <button onclick="navigateTo('reflection')"
+          class="nav-btn px-3.5 py-2 rounded-xl font-fun font-bold text-base transition-all duration-200 flex items-center gap-1.5 hover:bg-amber-100 text-slate-700"
+          data-page="reflection">
+          <span class="text-lg">🌟</span> Refleksi
+        </button>
+      </nav>
+
+      <!-- Right Action Bar: Font Zoom, Game Button & Student Avatar Info -->
+      <div class="flex items-center gap-1.5 sm:gap-3">
+
+        <!-- FONT SIZE ZOOM CONTROLS FOR CLASSROOM / SMARTBOARDS -->
+        <div
+          class="flex items-center gap-1 bg-amber-100/90 border-2 border-amber-300 rounded-2xl px-2 py-1 sm:px-2.5 sm:py-1 shadow-sm"
+          title="Ubah Ukuran Tulisan">
+          <span class="text-xs font-black text-amber-900 mr-0.5 sm:mr-1 flex items-center gap-1">🔤<span
+              class="hidden md:inline"> Teks:</span></span>
+          <button onclick="setFontSize('normal')" id="btn-font-normal"
+            class="px-2 sm:px-2.5 py-0.5 rounded-lg bg-amber-500 text-white font-fun font-bold text-xs sm:text-sm shadow-sm transition-all"
+            title="Ukuran Standar">A</button>
+          <button onclick="setFontSize('large')" id="btn-font-large"
+            class="px-2 sm:px-2.5 py-0.5 rounded-lg bg-white hover:bg-amber-200 text-slate-700 font-fun font-bold text-xs sm:text-sm shadow-sm transition-all"
+            title="Ukuran Besar">A+</button>
+          <button onclick="setFontSize('huge')" id="btn-font-huge"
+            class="px-2 sm:px-2.5 py-0.5 rounded-lg bg-white hover:bg-amber-200 text-slate-700 font-fun font-bold text-xs sm:text-sm shadow-sm transition-all"
+            title="Ukuran Sangat Besar (Proyektor)">A++</button>
+        </div>
+
+        <!-- SPECIAL BUTTON: AKSES GAME PECAHAN -->
+        <button onclick="openMiniGame()"
+          class="relative group bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-600 hover:from-pink-600 hover:to-indigo-700 text-white px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl font-fun font-bold text-sm sm:text-base shadow-lg shadow-purple-200 hover:shadow-purple-300 transform hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 animate-pulse-glow">
+          <span class="text-xl animate-bounce-soft">🎮</span>
+          <span class="tracking-wide">Main Game!</span>
+          <span
+            class="absolute -top-1.5 -right-1.5 bg-amber-400 text-slate-900 text-[11px] font-black px-1.5 py-0.2 rounded-full border border-white shadow">
+            SERU!
+          </span>
+        </button>
+
+        <!-- Sound Toggle -->
+        <button id="sound-btn" onclick="toggleAudio()" title="Efek Suara Aktif/Nonaktif"
+          class="w-11 h-11 rounded-xl bg-slate-100 hover:bg-amber-100 border-2 border-slate-200 text-slate-700 flex items-center justify-center text-xl transition-colors">
+          🔊
+        </button>
+
+        <!-- User Chip (Avatar & Stars) -->
+        <div onclick="navigateTo('home')"
+          class="cursor-pointer flex items-center gap-2.5 bg-amber-100/90 border-2 border-amber-300 px-3 py-1.5 rounded-2xl hover:bg-amber-200 transition-colors">
+          <span id="header-avatar" class="text-3xl">🐱</span>
+          <div class="hidden sm:block text-left leading-tight">
+            <p id="header-name" class="font-fun text-sm font-extrabold text-slate-800 truncate max-w-[100px]">Detektif
+              Boni</p>
+            <p class="text-xs font-black text-amber-700 flex items-center gap-0.5">
+              ⭐ <span id="header-stars">0</span> Poin
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Nav Bar (Bottom scrollable) -->
+    <div
+      class="lg:hidden flex items-center overflow-x-auto py-2.5 px-3 border-t border-slate-200 bg-amber-50/90 gap-2 custom-scrollbar">
+      <button onclick="navigateTo('home')"
+        class="nav-btn-mob px-3.5 py-1.5 rounded-xl text-sm font-bold whitespace-nowrap bg-white border border-slate-200 text-slate-700"
+        data-page="home">🏠 Beranda</button>
+      <button onclick="navigateTo('objectives')"
+        class="nav-btn-mob px-3.5 py-1.5 rounded-xl text-sm font-bold whitespace-nowrap bg-white border border-slate-200 text-slate-700"
+        data-page="objectives">🎯 Misi</button>
+      <button onclick="navigateTo('material')"
+        class="nav-btn-mob px-3.5 py-1.5 rounded-xl text-sm font-bold whitespace-nowrap bg-white border border-slate-200 text-slate-700"
+        data-page="material">💡 4 Jurus</button>
+      <button onclick="navigateTo('activity')"
+        class="nav-btn-mob px-3.5 py-1.5 rounded-xl text-sm font-bold whitespace-nowrap bg-white border border-slate-200 text-slate-700"
+        data-page="activity">🧪 Lab Kasus</button>
+      <button onclick="navigateTo('quiz')"
+        class="nav-btn-mob px-3.5 py-1.5 rounded-xl text-sm font-bold whitespace-nowrap bg-white border border-slate-200 text-slate-700"
+        data-page="quiz">🏆 Kuis</button>
+      <button onclick="navigateTo('reflection')"
+        class="nav-btn-mob px-3.5 py-1.5 rounded-xl text-sm font-bold whitespace-nowrap bg-white border border-slate-200 text-slate-700"
+        data-page="reflection">🌟 Refleksi</button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-grow max-w-6xl w-full mx-auto p-4 sm:p-6 md:p-8">
+
+    <!-- ================= PAGE 1: SLIDE PEMBUKA & IDENTITAS ================= -->
+    <section id="page-home" class="page-view flex flex-col items-center">
+
+      <!-- Welcome Hero Card -->
+      <div
+        class="w-full bg-gradient-to-b from-white to-amber-50/80 border-4 border-amber-300 rounded-3xl p-6 sm:p-10 md:p-12 shadow-xl relative overflow-hidden mb-8">
+
+        <!-- Decorative Background Badges -->
+        <div class="absolute -right-10 -top-10 text-9xl opacity-10 select-none pointer-events-none">🍕</div>
+        <div class="absolute -left-10 -bottom-10 text-9xl opacity-10 select-none pointer-events-none">🔍</div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+
+          <!-- Left: Hero Text -->
+          <div class="lg:col-span-7 space-y-5 text-center lg:text-left">
+            <div
+              class="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-200 to-orange-200 text-orange-900 font-extrabold text-sm sm:text-base px-5 py-2 rounded-full shadow-inner border border-amber-300">
+              <span class="text-xl">🎒</span> Matematika Menyenangkan • Kelas 5 SD
+            </div>
+
+            <h1 class="font-fun text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-900 leading-tight">
+              Petualangan <span
+                class="bg-gradient-to-r from-orange-600 via-amber-500 to-sky-600 bg-clip-text text-transparent">Detektif
+                Pecahan!</span> 🕵️‍♂️✨
+            </h1>
+
+            <p class="text-lg sm:text-xl md:text-2xl text-slate-700 leading-relaxed font-semibold">
+              Pernahkah kamu bingung saat membaca soal cerita pecahan tentang membagi kue, mengukur pita, atau menuang
+              jus?
+              Jangan khawatir! Di markas ini, kamu akan berlatih menjadi <strong
+                class="text-orange-600 font-black">Detektif Cilik</strong> yang mampu memecahkan misteri soal cerita
+              dengan <strong class="text-sky-700 font-black">4 Langkah Super Polya</strong>!
+            </p>
+
+            <!-- Quick Action Row -->
+            <div class="pt-3 flex flex-wrap justify-center lg:justify-start gap-4">
+              <button onclick="startMission()"
+                class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-fun font-bold text-xl px-9 py-4 rounded-2xl shadow-xl shadow-orange-300 transform hover:-translate-y-1 active:translate-y-0 transition-all flex items-center gap-3">
+                <span class="text-2xl">🚀</span> Mulai Petualangan
+              </button>
+              <button onclick="openMiniGame()"
+                class="bg-purple-600 hover:bg-purple-700 text-white font-fun font-bold text-xl px-7 py-4 rounded-2xl shadow-xl shadow-purple-200 transform hover:-translate-y-1 active:translate-y-0 transition-all flex items-center gap-3">
+                <span class="text-2xl">🎮</span> Main Game Sekarang
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: Interactive Student Identity Card -->
+          <div class="lg:col-span-5 bg-white border-4 border-sky-300 rounded-3xl p-6 sm:p-7 shadow-lg relative">
+            <div class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-4 mb-4 text-center">
+              <span class="text-xs sm:text-sm font-black uppercase tracking-wider text-sky-800">KARTU TANDA PENGENAL
+                DETEKTIF</span>
+              <h3 class="font-fun text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">Siapakah Namamu, Sobat?</h3>
+            </div>
+
+            <!-- Avatar Selector -->
+            <div class="space-y-3 mb-5">
+              <label class="block text-sm sm:text-base font-extrabold text-slate-700 text-center">PILIH KARAKTER
+                AVATARMU:</label>
+              <div class="grid grid-cols-4 gap-2.5 text-center" id="avatar-picker">
+                <button type="button" onclick="selectAvatar('🐱', 'Kucing Cerdik')"
+                  class="avatar-btn active p-3 rounded-2xl border-3 border-amber-400 bg-amber-50 hover:scale-105 transition-all flex flex-col items-center">
+                  <span class="text-4xl mb-1">🐱</span>
+                  <span class="text-xs sm:text-sm font-extrabold text-slate-800">Kucing</span>
+                </button>
+                <button type="button" onclick="selectAvatar('🦊', 'Rubah Pintar')"
+                  class="avatar-btn p-3 rounded-2xl border-2 border-slate-200 bg-white hover:scale-105 transition-all flex flex-col items-center">
+                  <span class="text-4xl mb-1">🦊</span>
+                  <span class="text-xs sm:text-sm font-extrabold text-slate-800">Rubah</span>
+                </button>
+                <button type="button" onclick="selectAvatar('🐼', 'Panda Cermat')"
+                  class="avatar-btn p-3 rounded-2xl border-2 border-slate-200 bg-white hover:scale-105 transition-all flex flex-col items-center">
+                  <span class="text-4xl mb-1">🐼</span>
+                  <span class="text-xs sm:text-sm font-extrabold text-slate-800">Panda</span>
+                </button>
+                <button type="button" onclick="selectAvatar('🦉', 'Burung Hantu')"
+                  class="avatar-btn p-3 rounded-2xl border-2 border-slate-200 bg-white hover:scale-105 transition-all flex flex-col items-center">
+                  <span class="text-4xl mb-1">🦉</span>
+                  <span class="text-xs sm:text-sm font-extrabold text-slate-800">Hantu</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Name Input -->
+            <div class="space-y-2 mb-4">
+              <label for="student-name-input" class="block text-sm sm:text-base font-extrabold text-slate-700">NAMA
+                SISWA / PANGGILAN:</label>
+              <div class="relative">
+                <input type="text" id="student-name-input" maxlength="20" placeholder="Tulis namamu di sini..."
+                  value="Detektif Boni"
+                  class="w-full px-4 py-3.5 rounded-2xl border-2 border-sky-300 focus:border-orange-500 focus:outline-none font-fun font-bold text-slate-900 text-lg sm:text-xl bg-sky-50/60"
+                  oninput="updateStudentName(this.value)">
+                <span class="absolute right-4 top-3.5 text-2xl text-slate-400">✏️</span>
+              </div>
+            </div>
+
+            <!-- Instruction Box -->
+            <div
+              class="bg-amber-50 rounded-2xl p-4 border-2 border-amber-300 text-sm sm:text-base text-amber-950 space-y-1.5">
+              <p class="font-extrabold flex items-center gap-1.5 text-amber-900">
+                <span class="text-lg">📌</span> Petunjuk Detektif:
+              </p>
+              <ul class="list-disc list-inside space-y-1 text-slate-700 font-semibold">
+                <li>Ikuti 4 langkah penyelidikan cerita secara berurutan.</li>
+                <li>Dapatkan bintang detektif di setiap latihan dan kuis!</li>
+                <li>Cetak sertifikat hebatmu di akhir petualangan.</li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Feature Highlight Badges -->
+      <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5">
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border-2 border-sky-200 shadow-sm flex items-center gap-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-sky-100 flex items-center justify-center text-2xl flex-shrink-0">🔍</div>
+          <div>
+            <h4 class="font-fun font-bold text-slate-900 text-base sm:text-lg">4 Langkah Polya</h4>
+            <p class="text-xs sm:text-sm text-slate-600 font-semibold">Struktur sistematis</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border-2 border-emerald-200 shadow-sm flex items-center gap-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center text-2xl flex-shrink-0">🍕
+          </div>
+          <div>
+            <h4 class="font-fun font-bold text-slate-900 text-base sm:text-lg">Visual Interaktif</h4>
+            <p class="text-xs sm:text-sm text-slate-600 font-semibold">Potongan kue nyata</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border-2 border-purple-200 shadow-sm flex items-center gap-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center text-2xl flex-shrink-0">🎮
+          </div>
+          <div>
+            <h4 class="font-fun font-bold text-slate-900 text-base sm:text-lg">Game Pecahan</h4>
+            <p class="text-xs sm:text-sm text-slate-600 font-semibold">Toko Roti & Kuis Cepat</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 sm:p-5 rounded-2xl border-2 border-amber-200 shadow-sm flex items-center gap-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-amber-100 flex items-center justify-center text-2xl flex-shrink-0">📜
+          </div>
+          <div>
+            <h4 class="font-fun font-bold text-slate-900 text-base sm:text-lg">Sertifikat Siswa</h4>
+            <p class="text-xs sm:text-sm text-slate-600 font-semibold">Bisa disimpan & dicetak</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= PAGE 2: TUJUAN PEMBELAJARAN (MISI BELAJAR) ================= -->
+    <section id="page-objectives" class="page-view hidden space-y-6">
+      <div class="bg-white border-4 border-sky-300 rounded-3xl p-6 sm:p-10 shadow-xl relative">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-slate-100 pb-5">
+          <div class="flex items-center gap-3.5">
+            <div
+              class="w-14 h-14 bg-sky-500 text-white rounded-2xl flex items-center justify-center text-3xl shadow-md">
+              🎯
+            </div>
+            <div>
+              <span class="text-xs sm:text-sm font-black uppercase text-sky-700 tracking-wider">CAPAIAN PEMBELAJARAN
+                FASE C (KELAS 5 SD)</span>
+              <h2 class="font-fun text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900">8 Misi Detektif
+                Pecahan</h2>
+            </div>
+          </div>
+          <div class="bg-sky-50 border-2 border-sky-200 px-5 py-3 rounded-2xl text-right">
+            <span class="text-xs sm:text-sm font-bold text-slate-600">Misi Tercapai:</span>
+            <div class="font-fun font-extrabold text-xl sm:text-2xl text-sky-700"><span
+                id="completed-objectives-count">0</span> dari 8 Misi</div>
+          </div>
+        </div>
+
+        <p class="text-base sm:text-lg md:text-xl text-slate-700 mt-5 font-semibold leading-relaxed">
+          Halo <strong id="student-name-obj" class="text-sky-700 font-black">Detektif Cilik</strong>! Untuk menjadi Ahli
+          Detektif Pecahan yang handal, mari kita tuntaskan 8 misi seru di bawah ini. Selesaikan petualangan untuk
+          menguasai setiap langkahnya!
+        </p>
+
+        <!-- 8 Objectives Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-7" id="objectives-list">
+
+          <!-- Obj 1 -->
+          <div
+            class="p-5 rounded-2xl border-2 border-slate-200 bg-white hover:border-sky-400 hover:bg-sky-50/60 transition-all flex items-start gap-4 group shadow-xs">
+            <div
+              class="mt-1 w-9 h-9 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center font-fun font-black text-base flex-shrink-0">
+              1</div>
+            <div>
+              <h4 class="font-fun font-bold text-slate-900 text-lg sm:text-xl flex items-center gap-2 flex-wrap">
+                Identifikasi "Diketahui"
+                <span class="text-xs sm:text-sm bg-amber-100 text-amber-900 font-black px-3 py-1 rounded-full">Kunci
+                  Data</span>
+              </h4>
+              <p class="text-sm sm:text-base md:text-lg text-slate-700 mt-2 font-medium leading-relaxed">
+                Mengidentifikasi informasi dan angka penting yang sudah diketahui dari soal cerita dengan teliti.</p>
+            </div>
+          </div>
+
+          <!-- Obj 2 -->
+          <div
+            class="p-5 rounded-2xl border-2 border-slate-200 bg-white hover:border-sky-400 hover:bg-sky-50/60 transition-all flex items-start gap-4 group shadow-xs">
+            <div
+              class="mt-1 w-9 h-9 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center font-fun font-black text-base flex-shrink-0">
+              2</div>
+            <div>
+              <h4 class="font-fun font-bold text-slate-900 text-lg sm:text-xl flex items-center gap-2 flex-wrap">
+                Menentukan "Ditanyakan"
+                <span class="text-xs sm:text-sm bg-sky-100 text-sky-900 font-black px-3 py-1 rounded-full">Misteri
+                  Soal</span>
+              </h4>
+              <p class="text-sm sm:text-base md:text-lg text-slate-700 mt-2 font-medium leading-relaxed">Menemukan inti
+                permasalahan atau hal yang diminta untuk dicari dalam soal cerita.</p>
+            </div>
+          </div>
+
+          <!-- Obj 3 -->
+          <div
+            class="p-5 rounded-2xl border-2 border-slate-200 bg-white hover:border-emerald-400 hover:bg-emerald-50/60 transition-all flex items-start gap-4 group shadow-xs">
+            <div
+              class="mt-1 w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-fun font-black text-base flex-shrink-0">
+              3</div>
+            <div>
+              <h4 class="font-fun font-bold text-slate-900 text-lg sm:text-xl flex items-center gap-2 flex-wrap">
+                Memilih Operasi Hitung
+                <span
+                  class="text-xs sm:text-sm bg-emerald-100 text-emerald-900 font-black px-3 py-1 rounded-full">Strategi
+                  Taktis</span>
+              </h4>
+              <p class="text-sm sm:text-base md:text-lg text-slate-700 mt-2 font-medium leading-relaxed">Menentukan
+                apakah soal harus diselesaikan dengan penjumlahan (+), pengurangan (-), atau lainnya.</p>
+            </div>
+          </div>
+
+          <!-- Obj 4 -->
+          <div
+            class="p-5 rounded-2xl border-2 border-slate-200 bg-white hover:border-emerald-400 hover:bg-emerald-50/60 transition-all flex items-start gap-4 group shadow-xs">
+            <div
+              class="mt-1 w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-fun font-black text-base flex-shrink-0">
+              4</div>
+            <div>
+              <h4 class="font-fun font-bold text-slate-900 text-lg sm:text-xl flex items-center gap-2 flex-wrap">
+                Perhitungan Akurat
+                <span
+                  class="text-xs sm:text-sm bg-emerald-100 text-emerald-900 font-black px-3 py-1 rounded-full">Hitung
+                  Cepat</span>
+              </h4>
+              <p class="text-sm sm:text-base md:text-lg text-slate-700 mt-2 font-medium leading-relaxed">Melakukan
+                operasi hitung pecahan dengan benar, termasuk menyamakan penyebut (KPK) bila berbeda.</p>
+            </div>
+          </div>
+
+          <!-- Obj 5 -->
+          <div
+            class="p-5 rounded-2xl border-2 border-slate-200 bg-white hover:border-purple-400 hover:bg-purple-50/60 transition-all flex items-start gap-4 group shadow-xs">
+            <div
+              class="mt-1 w-9 h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-fun font-black text-base flex-shrink-0">
+              5</div>
+            <div>
+              <h4 class="font-fun font-bold text-slate-900 text-lg sm:text-xl flex items-center gap-2 flex-wrap">
+                Penyelesaian Sistematis
+                <span class="text-xs sm:text-sm bg-purple-100 text-purple-900 font-black px-3 py-1 rounded-full">4
+                  Langkah Super</span>
+              </h4>
+              <p class="text-sm sm:text-base md:text-lg text-slate-700 mt-2 font-medium leading-relaxed">Menuliskan
+                langkah penyelesaian secara terurut: Diketahui &rarr; Ditanya &rarr; Cara &rarr; Kesimpulan.</p>
+            </div>
+          </div>
+
+          <!-- Obj 6 -->
+          <div
+            class="p-5 rounded-2xl border-2 border-slate-200 bg-white hover:border-purple-400 hover:bg-purple-50/60 transition-all flex items-start gap-4 group shadow-xs">
+            <div
+              class="mt-1 w-9 h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-fun font-black text-base flex-shrink-0">
+              6</div>
+            <div>
+              <h4 class="font-fun font-bold text-slate-900 text-lg sm:text-xl flex items-center gap-2 flex-wrap">
+                Menuliskan Kesimpulan
+                <span class="text-xs sm:text-sm bg-purple-100 text-purple-900 font-black px-3 py-1 rounded-full">Kalimat
+                  "Jadi"</span>
+              </h4>
+              <p class="text-sm sm:text-base md:text-lg text-slate-700 mt-2 font-medium leading-relaxed">Membuat kalimat
+                penutup yang relevan dengan konteks nyata (satuan: kg, loyang kue, meter, liter).</p>
+            </div>
+          </div>
+
+          <!-- Obj 7 -->
+          <div
+            class="p-5 rounded-2xl border-2 border-slate-200 bg-white hover:border-pink-400 hover:bg-pink-50/60 transition-all flex items-start gap-4 group shadow-xs">
+            <div
+              class="mt-1 w-9 h-9 rounded-xl bg-pink-100 text-pink-700 flex items-center justify-center font-fun font-black text-base flex-shrink-0">
+              7</div>
+            <div>
+              <h4 class="font-fun font-bold text-slate-900 text-lg sm:text-xl flex items-center gap-2 flex-wrap">
+                Menjelaskan ke Teman
+                <span class="text-xs sm:text-sm bg-pink-100 text-pink-900 font-black px-3 py-1 rounded-full">Kolaborasi
+                  Seru</span>
+              </h4>
+              <p class="text-sm sm:text-base md:text-lg text-slate-700 mt-2 font-medium leading-relaxed">Mampu
+                menceritakan kembali cara memecahkan soal kepada teman sebangku atau kelompok belajar.</p>
+            </div>
+          </div>
+
+          <!-- Obj 8 -->
+          <div
+            class="p-5 rounded-2xl border-2 border-slate-200 bg-white hover:border-amber-400 hover:bg-amber-50/60 transition-all flex items-start gap-4 group shadow-xs">
+            <div
+              class="mt-1 w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-fun font-black text-base flex-shrink-0">
+              8</div>
+            <div>
+              <h4 class="font-fun font-bold text-slate-900 text-lg sm:text-xl flex items-center gap-2 flex-wrap">
+                Refleksi & Evaluasi Diri
+                <span class="text-xs sm:text-sm bg-amber-100 text-amber-900 font-black px-3 py-1 rounded-full">Jurnal
+                  Detektif</span>
+              </h4>
+              <p class="text-sm sm:text-base md:text-lg text-slate-700 mt-2 font-medium leading-relaxed">Menyadari
+                bagian mana yang sudah dikuasai dan strategi apa yang paling menolong saat ada kesulitan.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Call to Action -->
+        <div class="mt-8 flex justify-end">
+          <button onclick="navigateTo('material')"
+            class="bg-sky-500 hover:bg-sky-600 text-white font-fun font-bold text-lg sm:text-xl px-8 py-3.5 rounded-2xl shadow-md transition-all flex items-center gap-2">
+            <span>Pelajari 4 Jurus Detektif</span> <span>&rarr;</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PAGE 3: MATERI INTI SINGKAT (4 JURUS DETEKTIF) ================= -->
+    <section id="page-material" class="page-view hidden space-y-6">
+
+      <!-- Intro Card -->
+      <div class="bg-white border-4 border-amber-300 rounded-3xl p-6 sm:p-10 shadow-xl">
+        <div class="flex items-center gap-4 mb-4">
+          <div
+            class="w-14 h-14 bg-amber-400 text-slate-900 rounded-2xl flex items-center justify-center text-3xl shadow-md font-fun font-bold flex-shrink-0">
+            💡
+          </div>
+          <div>
+            <span class="text-xs sm:text-sm font-black uppercase text-amber-700 tracking-wider">KUNCI RAHASIA DETEKTIF
+              POLYA</span>
+            <h2 class="font-fun text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900">4 Langkah Super
+              Selesaikan Soal Cerita</h2>
+          </div>
+        </div>
+        <p class="text-base sm:text-lg md:text-xl text-slate-700 font-semibold leading-relaxed">
+          Soal cerita matematika bukanlah momok yang menakutkan! Jika kita menguraikannya dengan 4 langkah berikut,
+          semua misteri pecahan akan terbuka dengan sangat mudah:
+        </p>
+
+        <!-- 4 Step Interactive Tabs -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-7">
+          <button onclick="showStepDetail(1)" id="step-tab-1"
+            class="step-tab p-4 sm:p-5 rounded-2xl border-3 border-sky-400 bg-sky-50 text-slate-900 font-fun font-bold text-base sm:text-lg flex flex-col items-center gap-1.5 transition-all shadow-xs">
+            <span class="text-3xl">🔎</span>
+            <span>Jurus 1: Diketahui</span>
+            <span class="text-xs sm:text-sm font-bold text-sky-700">Kumpulkan Jejak</span>
+          </button>
+          <button onclick="showStepDetail(2)" id="step-tab-2"
+            class="step-tab p-4 sm:p-5 rounded-2xl border-2 border-slate-200 bg-white text-slate-700 font-fun font-bold text-base sm:text-lg flex flex-col items-center gap-1.5 transition-all hover:bg-slate-50 shadow-xs">
+            <span class="text-3xl">❓</span>
+            <span>Jurus 2: Ditanyakan</span>
+            <span class="text-xs sm:text-sm font-bold text-slate-500">Misteri Inti</span>
+          </button>
+          <button onclick="showStepDetail(3)" id="step-tab-3"
+            class="step-tab p-4 sm:p-5 rounded-2xl border-2 border-slate-200 bg-white text-slate-700 font-fun font-bold text-base sm:text-lg flex flex-col items-center gap-1.5 transition-all hover:bg-slate-50 shadow-xs">
+            <span class="text-3xl">⚙️</span>
+            <span>Jurus 3: Hitung</span>
+            <span class="text-xs sm:text-sm font-bold text-slate-500">Operasi Pecahan</span>
+          </button>
+          <button onclick="showStepDetail(4)" id="step-tab-4"
+            class="step-tab p-4 sm:p-5 rounded-2xl border-2 border-slate-200 bg-white text-slate-700 font-fun font-bold text-base sm:text-lg flex flex-col items-center gap-1.5 transition-all hover:bg-slate-50 shadow-xs">
+            <span class="text-3xl">✅</span>
+            <span>Jurus 4: Kesimpulan</span>
+            <span class="text-xs sm:text-sm font-bold text-slate-500">Kalimat "Jadi..."</span>
+          </button>
+        </div>
+
+        <!-- Detail Box for Selected Step -->
+        <div id="step-detail-container"
+          class="mt-7 bg-gradient-to-r from-sky-50 to-blue-50 border-3 border-sky-300 rounded-3xl p-6 sm:p-8 transition-all duration-300">
+          <!-- Dynamic Content loaded via JS -->
+        </div>
+
+      </div>
+
+      <!-- Kamus Kata Kunci Ajaib -->
+      <div class="bg-white border-4 border-emerald-300 rounded-3xl p-6 sm:p-10 shadow-xl">
+        <div class="flex items-center gap-4 mb-5">
+          <div
+            class="w-13 h-13 p-2 bg-emerald-500 text-white rounded-2xl flex items-center justify-center text-3xl shadow flex-shrink-0">
+            🗝️
+          </div>
+          <div>
+            <h3 class="font-fun text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900">Kamus Kata Kunci Ajaib
+              Soal Cerita</h3>
+            <p class="text-sm sm:text-base md:text-lg text-slate-600 font-semibold mt-0.5">Kenali kata petunjuk dalam
+              cerita untuk menentukan operasi hitung yang tepat:</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+          <!-- Card Penjumlahan -->
+          <div class="bg-emerald-50/80 border-2 border-emerald-300 rounded-3xl p-5 sm:p-6 space-y-3">
+            <div class="flex items-center gap-2.5">
+              <span
+                class="w-9 h-9 rounded-xl bg-emerald-500 text-white font-fun font-black text-xl flex items-center justify-center">+</span>
+              <h4 class="font-fun font-extrabold text-emerald-950 text-lg sm:text-xl">Operasi Penjumlahan (Digabung)
+              </h4>
+            </div>
+            <p class="text-sm sm:text-base text-slate-700 font-medium">Digunakan ketika benda atau jumlah bertambah atau
+              dikumpulkan bersama.</p>
+            <div class="flex flex-wrap gap-2 pt-1">
+              <span
+                class="bg-white border-2 border-emerald-300 text-emerald-900 text-sm sm:text-base font-extrabold px-3.5 py-1.5 rounded-xl shadow-xs">Membeli
+                lagi</span>
+              <span
+                class="bg-white border-2 border-emerald-300 text-emerald-900 text-sm sm:text-base font-extrabold px-3.5 py-1.5 rounded-xl shadow-xs">Diberi
+                tambahan</span>
+              <span
+                class="bg-white border-2 border-emerald-300 text-emerald-900 text-sm sm:text-base font-extrabold px-3.5 py-1.5 rounded-xl shadow-xs">Total
+                keseluruhan</span>
+              <span
+                class="bg-white border-2 border-emerald-300 text-emerald-900 text-sm sm:text-base font-extrabold px-3.5 py-1.5 rounded-xl shadow-xs">Digabungkan</span>
+            </div>
+          </div>
+
+          <!-- Card Pengurangan -->
+          <div class="bg-orange-50/80 border-2 border-orange-300 rounded-3xl p-5 sm:p-6 space-y-3">
+            <div class="flex items-center gap-2.5">
+              <span
+                class="w-9 h-9 rounded-xl bg-orange-500 text-white font-fun font-black text-xl flex items-center justify-center">-</span>
+              <h4 class="font-fun font-extrabold text-orange-950 text-lg sm:text-xl">Operasi Pengurangan
+                (Berkurang/Selisih)</h4>
+            </div>
+            <p class="text-sm sm:text-base text-slate-700 font-medium">Digunakan saat benda diambil, terpakai, rusak,
+              atau membandingkan selisih.</p>
+            <div class="flex flex-wrap gap-2 pt-1">
+              <span
+                class="bg-white border-2 border-orange-300 text-orange-900 text-sm sm:text-base font-extrabold px-3.5 py-1.5 rounded-xl shadow-xs">Sisa
+                bagian</span>
+              <span
+                class="bg-white border-2 border-orange-300 text-orange-900 text-sm sm:text-base font-extrabold px-3.5 py-1.5 rounded-xl shadow-xs">Diberikan
+                kepada</span>
+              <span
+                class="bg-white border-2 border-orange-300 text-orange-900 text-sm sm:text-base font-extrabold px-3.5 py-1.5 rounded-xl shadow-xs">Dimakan
+                / Digunakan</span>
+              <span
+                class="bg-white border-2 border-orange-300 text-orange-900 text-sm sm:text-base font-extrabold px-3.5 py-1.5 rounded-xl shadow-xs">Selisih
+                lebihnya</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-8 flex justify-between items-center">
+          <button onclick="navigateTo('objectives')"
+            class="text-slate-600 hover:text-slate-900 text-base sm:text-lg font-bold flex items-center gap-1.5">
+            &larr; Kembali ke Misi
+          </button>
+          <button onclick="navigateTo('activity')"
+            class="bg-emerald-600 hover:bg-emerald-700 text-white font-fun font-bold text-lg sm:text-xl px-8 py-3.5 rounded-2xl shadow-md transition-all flex items-center gap-2">
+            <span>Uji Coba di Lab Kasus</span> <span>&rarr;</span>
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ================= PAGE 4: AKTIVITAS INTERAKTIF (LAB KASUS NYATA) ================= -->
+    <section id="page-activity" class="page-view hidden space-y-6">
+
+      <div class="bg-white border-4 border-purple-300 rounded-3xl p-6 sm:p-10 shadow-xl">
+
+        <!-- Header Lab -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-slate-100 pb-5">
+          <div class="flex items-center gap-3.5">
+            <div
+              class="w-14 h-14 bg-purple-500 text-white rounded-2xl flex items-center justify-center text-3xl shadow-md font-fun flex-shrink-0">
+              🧪
+            </div>
+            <div>
+              <span class="text-xs sm:text-sm font-black uppercase text-purple-700 tracking-wider">SIMULASI INTERAKTIF
+                MANDIRI</span>
+              <h2 class="font-fun text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900">Laboratorium Kasus
+                Detektif</h2>
+            </div>
+          </div>
+          <!-- Case Switcher -->
+          <div class="flex items-center gap-2.5">
+            <button onclick="switchLabCase(1)" id="lab-btn-1"
+              class="lab-case-btn px-5 py-2.5 rounded-2xl font-fun font-bold text-sm sm:text-base bg-purple-600 text-white shadow-md transition-all">
+              🍕 Kasus 1: Pesta Kue
+            </button>
+            <button onclick="switchLabCase(2)" id="lab-btn-2"
+              class="lab-case-btn px-5 py-2.5 rounded-2xl font-fun font-bold text-sm sm:text-base bg-slate-100 text-slate-700 hover:bg-purple-100 transition-all">
+              🧃 Kasus 2: Jus Jeruk
+            </button>
+          </div>
+        </div>
+
+        <!-- Case Story Card -->
+        <div
+          class="mt-7 bg-gradient-to-r from-purple-50 via-pink-50 to-amber-50 border-3 border-purple-300 rounded-3xl p-6 sm:p-7 relative shadow-sm">
+          <div class="flex items-start gap-4">
+            <span class="text-5xl hidden sm:inline" id="lab-case-icon">🍕</span>
+            <div>
+              <span class="text-xs sm:text-sm font-black uppercase tracking-wider text-purple-800"
+                id="lab-case-title-badge">STUDI KASUS 1: PENJUMLAHAN PECAHAN</span>
+              <h3 class="font-fun text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1" id="lab-case-title">Pesta Kue
+                Ulang Tahun Ibu</h3>
+              <p class="text-base sm:text-lg md:text-xl text-slate-800 mt-3 leading-relaxed font-semibold"
+                id="lab-case-story">
+                Ibu memiliki <span class="bg-amber-200 px-2 py-0.5 rounded font-black text-amber-950">1/2 loyang</span>
+                kue rasa cokelat di kulkas. Kemudian, Bibi membawakan lagi <span
+                  class="bg-sky-200 px-2 py-0.5 rounded font-black text-sky-950">1/4 loyang</span> kue dengan rasa yang
+                sama. Berapa loyang total kue yang dimiliki Ibu sekarang?
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Step-by-Step Investigation Playground -->
+        <div class="mt-7 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+          <!-- Left: 4 Step Interactive Builder (7 Cols) -->
+          <div class="lg:col-span-7 space-y-4">
+            <h4 class="font-fun text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
+              <span class="text-2xl">📋</span> Lembar Penyelidikan Detektif:
+            </h4>
+
+            <!-- Step 1 Card -->
+            <div class="bg-slate-50 border-2 border-sky-300 rounded-2xl p-4 sm:p-5">
+              <div class="flex items-center justify-between">
+                <span class="font-fun font-bold text-base sm:text-lg text-sky-900 flex items-center gap-2">
+                  <span>1️⃣</span> 1. APA YANG DIKETAHUI?
+                </span>
+                <span id="lab-badge-1"
+                  class="text-xs sm:text-sm font-black text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Selesai
+                  ✓</span>
+              </div>
+              <p class="text-sm sm:text-base md:text-lg text-slate-800 font-semibold mt-2 leading-relaxed"
+                id="lab-known-text">
+                • Kue dari Ibu = 1/2 loyang<br>
+                • Kue tambahan dari Bibi = 1/4 loyang
+              </p>
+            </div>
+
+            <!-- Step 2 Card -->
+            <div class="bg-slate-50 border-2 border-amber-300 rounded-2xl p-4 sm:p-5">
+              <div class="flex items-center justify-between">
+                <span class="font-fun font-bold text-base sm:text-lg text-amber-900 flex items-center gap-2">
+                  <span>2️⃣</span> 2. APA YANG DITANYAKAN?
+                </span>
+                <span id="lab-badge-2"
+                  class="text-xs sm:text-sm font-black text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Selesai
+                  ✓</span>
+              </div>
+              <p class="text-sm sm:text-base md:text-lg text-slate-800 font-semibold mt-2 leading-relaxed"
+                id="lab-asked-text">
+                Total seluruh kue yang dimiliki Ibu sekarang (dalam satuan loyang).
+              </p>
+            </div>
+
+            <!-- Step 3 Interactive Operation Selector -->
+            <div class="bg-slate-50 border-2 border-purple-300 rounded-2xl p-4 sm:p-5 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="font-fun font-bold text-base sm:text-lg text-purple-900 flex items-center gap-2">
+                  <span>3️⃣</span> 3. STRATEGI & MODEL MATEMATIKA
+                </span>
+                <span class="text-xs sm:text-sm font-black text-purple-700 bg-purple-100 px-3 py-1 rounded-full">Langkah
+                  Tepat</span>
+              </div>
+
+              <div class="flex items-center gap-2.5">
+                <span class="text-sm sm:text-base font-bold text-slate-700">Model:</span>
+                <span class="font-fun font-bold text-lg sm:text-xl text-slate-900" id="lab-model-display">1/2 + 1/4 =
+                  ...</span>
+              </div>
+
+              <!-- Interactive Denominator Alignment Button -->
+              <div class="bg-white p-4 rounded-2xl border border-purple-200">
+                <p class="text-xs sm:text-sm font-bold text-slate-700 mb-2.5">
+                  💡 Penyebutnya belum sama (2 dan 4). Samakan penyebut dengan KPK = 4:
+                </p>
+                <div
+                  class="flex items-center gap-2.5 font-fun font-extrabold text-slate-900 text-base sm:text-lg flex-wrap">
+                  <span class="bg-amber-100 px-3 py-1.5 rounded-xl border border-amber-300">1/2 = 2/4</span>
+                  <span class="text-xl">+</span>
+                  <span class="bg-sky-100 px-3 py-1.5 rounded-xl border border-sky-300">1/4</span>
+                  <span class="text-xl">=</span>
+                  <span
+                    class="bg-emerald-100 text-emerald-800 px-3 py-1.5 rounded-xl border-2 border-emerald-400 text-xl"
+                    id="lab-calc-result">3/4</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4 Interactive Conclusion -->
+            <div class="bg-emerald-50 border-2 border-emerald-400 rounded-2xl p-4 sm:p-5">
+              <span class="font-fun font-bold text-base sm:text-lg text-emerald-950 flex items-center gap-2">
+                <span>4️⃣</span> 4. KESIMPULAN KONTEKSTUAL
+              </span>
+              <p class="text-sm sm:text-base md:text-lg font-bold text-emerald-900 mt-2 bg-white/90 p-4 rounded-2xl border border-emerald-300 leading-relaxed"
+                id="lab-conclusion-text">
+                "Jadi, total kue yang dimiliki Ibu sekarang adalah <strong>3/4 loyang kue</strong>."
+              </p>
+            </div>
+
+          </div>
+
+          <!-- Right: Visual Fraction Representation (5 Cols) -->
+          <div
+            class="lg:col-span-5 bg-gradient-to-b from-slate-50 to-white border-2 border-slate-200 rounded-3xl p-6 flex flex-col items-center justify-center text-center shadow-sm">
+            <span class="text-xs sm:text-sm font-black uppercase text-slate-500 tracking-wider mb-2">SIMULASI VISUAL
+              NYATA</span>
+            <h4 class="font-fun font-extrabold text-slate-900 text-lg sm:text-xl mb-4" id="lab-visual-title">Visualisasi
+              Pecahan Kue</h4>
+
+            <!-- SVG Visual Representation of Fractions -->
+            <div class="w-52 h-52 relative flex items-center justify-center my-2" id="lab-visual-canvas-box">
+              <!-- SVG dynamically rendered -->
+              <svg viewBox="0 0 100 100" class="w-full h-full transform -rotate-90 drop-shadow-md" id="lab-svg">
+                <circle cx="50" cy="50" r="40" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2" />
+                <path d="M 50 50 L 90 50 A 40 40 0 0 1 50 90 Z" fill="#FBBF24" stroke="#d97706" stroke-width="1.5" />
+                <path d="M 50 50 L 50 90 A 40 40 0 0 1 10 50 Z" fill="#FBBF24" stroke="#d97706" stroke-width="1.5" />
+                <path d="M 50 50 L 10 50 A 40 40 0 0 1 50 10 Z" fill="#38BDF8" stroke="#0284c7" stroke-width="1.5" />
+                <circle cx="50" cy="50" r="4" fill="#ffffff" stroke="#94a3b8" stroke-width="2" />
+              </svg>
+            </div>
+
+            <!-- Legend for the visual -->
+            <div class="mt-4 flex flex-wrap justify-center gap-2.5 text-xs sm:text-sm font-extrabold">
+              <span
+                class="inline-flex items-center gap-1.5 bg-amber-100 text-amber-900 px-3 py-1.5 rounded-xl border border-amber-300">
+                <span class="w-3.5 h-3.5 bg-amber-400 rounded-md inline-block"></span> 2/4 (Kue Ibu)
+              </span>
+              <span
+                class="inline-flex items-center gap-1.5 bg-sky-100 text-sky-900 px-3 py-1.5 rounded-xl border border-sky-300">
+                <span class="w-3.5 h-3.5 bg-sky-400 rounded-md inline-block"></span> 1/4 (Kue Bibi)
+              </span>
+              <span
+                class="inline-flex items-center gap-1.5 bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl border border-slate-300">
+                <span class="w-3.5 h-3.5 bg-slate-300 rounded-md inline-block"></span> 1/4 (Kosong)
+              </span>
+            </div>
+
+            <div
+              class="mt-4 p-4 bg-purple-50 rounded-2xl text-sm sm:text-base text-purple-950 font-bold border-2 border-purple-200 leading-relaxed">
+              ✨ <strong>Lihat!</strong> 3 dari 4 potongan kue terisi penuh. Inilah makna pecahan <strong
+                class="text-purple-700 font-black text-lg">3/4</strong> secara nyata!
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Peer Discussion Challenge Prompt (Objective 7) -->
+        <div
+          class="mt-8 bg-gradient-to-r from-pink-100 via-rose-50 to-amber-100 border-3 border-pink-300 rounded-3xl p-6 sm:p-7 shadow-sm">
+          <div class="flex items-start gap-4">
+            <span class="text-4xl">🗣️</span>
+            <div class="space-y-2">
+              <span
+                class="bg-pink-200 text-pink-900 text-xs sm:text-sm font-black px-3 py-1 rounded-full uppercase">MISI 7:
+                BERBICARA DENGAN TEMAN SEBANGKU</span>
+              <h4 class="font-fun text-xl sm:text-2xl font-extrabold text-slate-900">Tantangan Berbagi Penjelasan</h4>
+              <p class="text-base sm:text-lg text-slate-800 leading-relaxed font-semibold">
+                Cobalah jelaskan kepada teman sebangkumu dengan kalimatmu sendiri: <em>"Kenapa ya pecahan 1/2 tidak bisa
+                  langsung ditambah 1/4 menjadi 2/6?"</em>
+                Jelaskan bahwa pecahan harus disamakan dulu ukuran potongannya (penyebutnya)!
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 flex justify-between items-center">
+          <button onclick="navigateTo('material')"
+            class="text-slate-600 hover:text-slate-900 text-base sm:text-lg font-bold flex items-center gap-1.5">
+            &larr; Kembali ke 4 Jurus
+          </button>
+          <button onclick="navigateTo('quiz')"
+            class="bg-purple-600 hover:bg-purple-700 text-white font-fun font-bold text-lg sm:text-xl px-8 py-3.5 rounded-2xl shadow-md transition-all flex items-center gap-2">
+            <span>Uji Nyali di Kuis Detektif</span> <span>&rarr;</span>
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ================= PAGE 5: KUIS & EVALUASI INTERAKTIF ================= -->
+    <section id="page-quiz" class="page-view hidden space-y-6">
+
+      <div class="bg-white border-4 border-pink-300 rounded-3xl p-6 sm:p-10 shadow-xl">
+
+        <!-- Quiz Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-slate-100 pb-5">
+          <div class="flex items-center gap-3.5">
+            <div
+              class="w-14 h-14 bg-pink-500 text-white rounded-2xl flex items-center justify-center text-3xl shadow-md font-fun flex-shrink-0">
+              🏆
+            </div>
+            <div>
+              <span class="text-xs sm:text-sm font-black uppercase text-pink-700 tracking-wider">UJIAN LISENSI
+                DETEKTIF</span>
+              <h2 class="font-fun text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900">Tantangan Kasus
+                Pecahan</h2>
+            </div>
+          </div>
+          <!-- Quiz Progress Indicator -->
+          <div class="flex items-center gap-3.5">
+            <div class="text-right">
+              <span class="text-xs sm:text-sm font-bold text-slate-600">Pertanyaan:</span>
+              <div class="font-fun font-extrabold text-lg sm:text-xl text-pink-600">
+                <span id="quiz-current-num">1</span> dari <span id="quiz-total-num">5</span>
+              </div>
+            </div>
+            <div class="w-28 bg-slate-200 h-3.5 rounded-full overflow-hidden">
+              <div id="quiz-progress-bar" class="bg-pink-500 h-full rounded-full transition-all duration-300"
+                style="width: 20%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Question Card Container -->
+        <div id="quiz-card" class="mt-7">
+          <!-- Dynamically Injected Question Content -->
+        </div>
+
+        <!-- Feedback Alert Box (Correct / Incorrect with Explanation) -->
+        <div id="quiz-feedback-box" class="hidden mt-7 rounded-3xl p-6 transition-all duration-300 badge-pop">
+          <!-- Dynamic Feedback Content -->
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ================= PAGE 6: UMPAN BALIK & REFLEKSI DIRI ================= -->
+    <section id="page-reflection" class="page-view hidden space-y-6">
+
+      <div class="bg-white border-4 border-amber-300 rounded-3xl p-6 sm:p-10 shadow-xl">
+
+        <div class="flex items-center gap-3.5 border-b-2 border-slate-100 pb-5 mb-6">
+          <div
+            class="w-14 h-14 bg-amber-400 text-slate-900 rounded-2xl flex items-center justify-center text-3xl shadow-md font-fun font-bold flex-shrink-0">
+            🌟
+          </div>
+          <div>
+            <span class="text-xs sm:text-sm font-black uppercase text-amber-700 tracking-wider">MISI 8: JURNAL REFLEKSI
+              & APRESIASI</span>
+            <h2 class="font-fun text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900">Refleksi Diri Detektif
+              Cilik</h2>
+          </div>
+        </div>
+
+        <p class="text-base sm:text-lg md:text-xl text-slate-700 leading-relaxed font-semibold">
+          Hebat sekali, <strong id="student-name-ref" class="text-orange-600 font-black">Detektif Boni</strong>! Kamu
+          telah menempuh seluruh rute penyelidikan soal cerita pecahan. Mari merefleksikan pengalaman belajarmu hari ini
+          agar semakin hebat di masa depan:
+        </p>
+
+        <!-- Reflection Form -->
+        <div class="mt-7 grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <!-- Question 1: Perasaan Belajar -->
+          <div class="bg-amber-50/70 border-3 border-amber-200 rounded-3xl p-6 space-y-4 shadow-sm">
+            <h4 class="font-fun font-bold text-slate-900 text-lg sm:text-xl flex items-center gap-2">
+              <span class="text-2xl">😊</span> 1. Bagaimana perasaanmu setelah belajar hari ini?
+            </h4>
+            <div class="grid grid-cols-4 gap-2.5 text-center" id="emoji-feelings">
+              <button onclick="setFeeling('Sangat Senang', '🥳')"
+                class="feeling-btn p-3.5 rounded-2xl border-2 border-amber-400 bg-white hover:bg-amber-100 active:scale-95 transition-all">
+                <span class="text-4xl block">🥳</span>
+                <span class="text-sm sm:text-base font-bold text-slate-900 mt-1.5 block">Senang</span>
+              </button>
+              <button onclick="setFeeling('Tertantang', '💪')"
+                class="feeling-btn p-3.5 rounded-2xl border-2 border-slate-200 bg-white hover:bg-amber-100 active:scale-95 transition-all">
+                <span class="text-4xl block">💪</span>
+                <span class="text-sm sm:text-base font-bold text-slate-900 mt-1.5 block">Tertantang</span>
+              </button>
+              <button onclick="setFeeling('Sedikit Bingung', '🤔')"
+                class="feeling-btn p-3.5 rounded-2xl border-2 border-slate-200 bg-white hover:bg-amber-100 active:scale-95 transition-all">
+                <span class="text-4xl block">🤔</span>
+                <span class="text-sm sm:text-base font-bold text-slate-900 mt-1.5 block">Bingung</span>
+              </button>
+              <button onclick="setFeeling('Semangat Berlatih Lagi', '🔥')"
+                class="feeling-btn p-3.5 rounded-2xl border-2 border-slate-200 bg-white hover:bg-amber-100 active:scale-95 transition-all">
+                <span class="text-4xl block">🔥</span>
+                <span class="text-sm sm:text-base font-bold text-slate-900 mt-1.5 block">Semangat</span>
+              </button>
+            </div>
+            <p id="feeling-status" class="text-base sm:text-lg font-extrabold text-amber-900 text-center">Pilihanmu:
+              Sangat Senang 🥳</p>
+          </div>
+
+          <!-- Question 2: Bagian Paling Menantang -->
+          <div class="bg-sky-50/70 border-3 border-sky-200 rounded-3xl p-6 space-y-4 shadow-sm">
+            <h4 class="font-fun font-bold text-slate-900 text-lg sm:text-xl flex items-center gap-2">
+              <span class="text-2xl">🎯</span> 2. Bagian mana yang menurutmu paling membutuhkan ketelitian?
+            </h4>
+            <div class="space-y-3 text-base sm:text-lg font-bold text-slate-900">
+              <label
+                class="flex items-center gap-3 p-3.5 bg-white rounded-2xl border-2 border-sky-200 cursor-pointer hover:bg-sky-100/60 transition-colors">
+                <input type="radio" name="challenge" value="Menemukan informasi diketahui & ditanyakan" checked
+                  class="w-5 h-5 text-sky-600 focus:ring-sky-500">
+                <span>Membedakan apa yang Diketahui & Ditanyakan</span>
+              </label>
+              <label
+                class="flex items-center gap-3 p-3.5 bg-white rounded-2xl border-2 border-sky-200 cursor-pointer hover:bg-sky-100/60 transition-colors">
+                <input type="radio" name="challenge" value="Menentukan operasi hitung (+ atau -)"
+                  class="w-5 h-5 text-sky-600 focus:ring-sky-500">
+                <span>Menentukan apakah ditambah (+) atau dikurang (-)</span>
+              </label>
+              <label
+                class="flex items-center gap-3 p-3.5 bg-white rounded-2xl border-2 border-sky-200 cursor-pointer hover:bg-sky-100/60 transition-colors">
+                <input type="radio" name="challenge" value="Menyamakan penyebut pecahan (KPK)"
+                  class="w-5 h-5 text-sky-600 focus:ring-sky-500">
+                <span>Menyamakan penyebut pecahan yang berbeda (KPK)</span>
+              </label>
+              <label
+                class="flex items-center gap-3 p-3.5 bg-white rounded-2xl border-2 border-sky-200 cursor-pointer hover:bg-sky-100/60 transition-colors">
+                <input type="radio" name="challenge" value="Merumuskan kalimat kesimpulan akhir"
+                  class="w-5 h-5 text-sky-600 focus:ring-sky-500">
+                <span>Merumuskan kalimat kesimpulan akhir ("Jadi,...")</span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Question 3: Tuliskan Strategi Terbaikmu -->
+        <div class="mt-7 bg-emerald-50/70 border-3 border-emerald-300 rounded-3xl p-6 sm:p-7 space-y-3">
+          <h4 class="font-fun font-bold text-slate-900 text-lg sm:text-xl flex items-center gap-2">
+            <span class="text-2xl">✍️</span> 3. Apa strategi / trik terbaik yang kamu pelajari hari ini?
+          </h4>
+          <textarea id="reflection-strategy" rows="2"
+            class="w-full p-4 rounded-2xl border-2 border-emerald-300 focus:outline-none focus:border-emerald-500 font-semibold text-slate-900 text-base sm:text-lg bg-white"
+            placeholder="Contoh: Menggarisbawahi kata kunci 'sisa' untuk pengurangan, dan selalu menyamakan penyebut terlebih dahulu..."></textarea>
+        </div>
+
+        <!-- Certificate Preview & Download Action -->
+        <div class="mt-10 border-t-2 border-slate-100 pt-8 flex flex-col items-center text-center">
+          <h3 class="font-fun text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2">🎉 Lisensi Detektif Pecahan Resmi
+          </h3>
+          <p class="text-slate-700 text-base sm:text-lg max-w-xl mb-7 font-semibold">
+            Selamat! Kamu berhak mendapatkan sertifikat kelulusan detektif matematika kelas 5. Kamu bisa mencetak atau
+            menyimpannya sebagai kenang-kenangan!
+          </p>
+
+          <!-- Printable Certificate Card -->
+          <div id="certificate-card"
+            class="w-full max-w-3xl bg-gradient-to-r from-amber-100 via-yellow-50 to-orange-100 border-8 border-amber-400 rounded-3xl p-7 sm:p-10 shadow-2xl relative overflow-hidden text-center text-slate-900">
+            <div class="absolute top-3 left-3 text-3xl">🌟</div>
+            <div class="absolute top-3 right-3 text-3xl">🌟</div>
+            <div class="absolute bottom-3 left-3 text-3xl">🌟</div>
+            <div class="absolute bottom-3 right-3 text-3xl">🌟</div>
+
+            <div class="text-xs sm:text-sm font-black uppercase tracking-widest text-amber-800 mb-1.5">SERTIFIKAT
+              KELULUSAN MISI</div>
+            <h2 class="font-fun text-3xl sm:text-4xl md:text-5xl font-extrabold text-orange-700">DETEKTIF PECAHAN KELAS
+              5 SD</h2>
+
+            <p class="text-sm sm:text-base text-slate-700 mt-3 font-semibold">Diberikan dengan bangga kepada:</p>
+            <div class="my-4 py-1.5 border-b-4 border-dashed border-amber-500 inline-block px-10">
+              <span id="cert-student-name"
+                class="font-fun text-3xl sm:text-4xl md:text-5xl font-black text-slate-950">Detektif Boni</span>
+            </div>
+
+            <p class="text-base sm:text-lg text-slate-800 max-w-xl mx-auto leading-relaxed mt-2 font-semibold">
+              Telah berhasil menguasai <strong>4 Langkah Super Detektif Soal Cerita Pecahan</strong>, mengidentifikasi
+              data dengan tepat, dan menuntaskan tantangan kuis matematika.
+            </p>
+
+            <div class="mt-7 flex items-center justify-around border-t-2 border-amber-300 pt-5">
+              <div>
+                <span class="text-sm font-bold text-slate-700 uppercase block">Gelar Detektif</span>
+                <span id="cert-rank" class="font-fun font-bold text-amber-900 text-base sm:text-lg">Detektif Cilik Hebat
+                  ⭐⭐⭐</span>
+              </div>
+              <div
+                class="w-16 h-16 bg-amber-400 rounded-full border-4 border-white flex items-center justify-center text-3xl shadow-md">
+                🏅
+              </div>
+              <div>
+                <span class="text-sm font-bold text-slate-700 uppercase block">Tanggal</span>
+                <span id="cert-date" class="font-fun font-bold text-slate-800 text-base sm:text-lg">22 September
+                  2026</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-7 flex flex-wrap gap-4 justify-center">
+            <button onclick="window.print()"
+              class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-fun font-bold text-lg px-8 py-3.5 rounded-2xl shadow-xl transition-all flex items-center gap-2.5">
+              <span class="text-xl">🖨️</span> Cetak Sertifikat
+            </button>
+            <button onclick="openMiniGame()"
+              class="bg-purple-600 hover:bg-purple-700 text-white font-fun font-bold text-lg px-8 py-3.5 rounded-2xl shadow-xl transition-all flex items-center gap-2.5">
+              <span class="text-xl">🎮</span> Mainkan Game Tambahan
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ================= MODAL: MINI-GAME PECAHAN INTERAKTIF ================= -->
+  <div id="game-modal"
+    class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 hidden">
+    <div
+      class="bg-gradient-to-b from-white to-purple-50 w-full max-w-2xl border-4 border-purple-400 rounded-3xl p-5 sm:p-7 shadow-2xl relative max-h-[92vh] overflow-y-auto custom-scrollbar flex flex-col">
+
+      <!-- Close Button -->
+      <button onclick="closeMiniGame()"
+        class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-100 hover:bg-rose-100 text-slate-500 hover:text-rose-600 flex items-center justify-center text-xl font-bold transition-colors">
+        ✕
+      </button>
+
+      <!-- Game Header -->
+      <div class="flex items-center gap-3.5 border-b-2 border-purple-200 pb-4 mb-4">
+        <div
+          class="w-13 h-13 p-2 bg-purple-600 text-white rounded-2xl flex items-center justify-center text-3xl shadow-md flex-shrink-0">
+          🍰
+        </div>
+        <div>
+          <span
+            class="bg-purple-100 text-purple-900 text-xs sm:text-sm font-black px-3 py-1 rounded-full uppercase">GAME
+            PECAHAN INTERAKTIF</span>
+          <h3 class="font-fun text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 mt-0.5">Toko Roti Detektif:
+            Racik Pecahan!</h3>
+        </div>
+      </div>
+
+      <!-- Game Screen (Start vs Play vs Result) -->
+      <div id="game-arena" class="space-y-5 flex-grow flex flex-col justify-center">
+
+        <!-- Game Intro Screen -->
+        <div id="game-start-screen" class="text-center py-6 space-y-5">
+          <div class="text-7xl animate-bounce-soft">👨‍🍳🎂</div>
+          <h4 class="font-fun text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900">Bantu Chef Boni Menyiapkan
+            Pesanan!</h4>
+          <p class="text-base sm:text-lg md:text-xl text-slate-700 max-w-xl mx-auto leading-relaxed font-semibold">
+            Pelanggan hewan datang memesan potongan kue pecahan! Baca pesanan soal ceritanya, lalu klik porsi pecahan
+            yang tepat secepat mungkin sebelum waktu habis!
+          </p>
+
+          <div
+            class="bg-purple-100/80 border-2 border-purple-300 rounded-3xl p-5 max-w-md mx-auto text-sm sm:text-base text-purple-950 font-bold text-left space-y-1.5 shadow-xs">
+            <p class="font-black text-purple-950 text-base sm:text-lg">🎮 Aturan Main:</p>
+            <p>• Terdapat 5 pesanan cepat.</p>
+            <p>• Jawab benar untuk mendapat 100 poin & bintang.</p>
+            <p>• Terdapat 3 nyawa hati (❤️ ❤️ ❤️).</p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2">
+            <button onclick="startGamePlay()"
+              class="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-fun font-bold text-xl px-9 py-4 rounded-2xl shadow-xl shadow-purple-300 transform hover:scale-105 active:scale-95 transition-all">
+              Mulai Game Bawaan! 🚀
+            </button>
+            <button onclick="toggleExternalGameInput()"
+              class="w-full sm:w-auto bg-white border-2 border-purple-300 hover:bg-purple-100 text-purple-800 font-fun font-bold text-base sm:text-lg px-6 py-4 rounded-2xl transition-all flex items-center justify-center gap-2">
+              <span>🌐</span> Game
+            </button>
+          </div>
+
+          <!-- External Game Input Collapsible Box -->
+          <div id="external-game-box"
+            class="hidden max-w-lg mx-auto p-5 bg-purple-50 rounded-3xl border-2 border-purple-300 text-left space-y-3 shadow-sm">
+            <div class="flex items-center justify-between">
+              <label class="text-sm font-extrabold text-purple-950 flex items-center gap-2">
+                <span class="text-xl">🔗</span> Tautan Game Online Tambahan:
+              </label>
+              <span class="text-xs bg-purple-200 text-purple-900 px-3 py-1 rounded-full font-black">Guru / Siswa</span>
+            </div>
+            <div class="flex gap-2">
+              <input type="url" id="external-game-url" value="https://wordwall.net/id-id/community/soal-cerita-pecahan"
+                placeholder="https://wordwall.net/..."
+                class="w-full text-sm sm:text-base p-3 rounded-xl border-2 border-purple-300 focus:outline-none focus:border-purple-500 font-semibold bg-white">
+              <button onclick="openExternalGame()"
+                class="bg-purple-600 text-white px-5 py-3 rounded-xl text-sm sm:text-base font-bold hover:bg-purple-700 whitespace-nowrap shadow-md">
+                Buka ↗
+              </button>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
+              Tips: Guru dapat memasukkan link game kuis Wordwall, Quizizz, atau PhET pecahan buatan kelas di sini.
+            </p>
+          </div>
+        </div>
+
+        <!-- Game Play Active Screen (Hidden by default) -->
+        <div id="game-play-screen" class="hidden space-y-5">
+
+          <!-- Status Bar (Score, Lives, Level) -->
+          <div
+            class="flex items-center justify-between bg-purple-100/90 px-5 py-3 rounded-2xl border-2 border-purple-300 text-base sm:text-lg font-fun font-bold">
+            <div class="flex items-center gap-2 text-purple-950">
+              <span>Pesanan:</span>
+              <span id="game-level-num" class="text-purple-700 text-xl font-extrabold">1</span>/5
+            </div>
+            <div class="flex items-center gap-1.5 text-2xl text-rose-500" id="game-lives-display">
+              ❤️ ❤️ ❤️
+            </div>
+            <div class="flex items-center gap-2 text-amber-700">
+              <span>Skor:</span>
+              <span id="game-score-num" class="text-xl font-extrabold">0</span>
+            </div>
+          </div>
+
+          <!-- Customer Order Prompt -->
+          <div class="bg-white border-3 border-purple-300 rounded-3xl p-6 sm:p-7 shadow-sm text-center">
+            <span id="game-customer-avatar" class="text-6xl block mb-2">🐰</span>
+            <p class="text-sm sm:text-base font-extrabold text-purple-800" id="game-customer-name">Kelinci Lulu memesan:
+            </p>
+            <h4 class="font-fun text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 mt-2 leading-relaxed"
+              id="game-order-text">
+              "Aku membeli 1/4 loyang kue keju, lalu temanku membawakanku 2/4 loyang lagi. Berapa loyang total kueku?"
+            </h4>
+          </div>
+
+          <!-- Options Grid -->
+          <div class="grid grid-cols-2 gap-4" id="game-options-container">
+            <!-- Dynamic option buttons -->
+          </div>
+
+          <!-- Game Mini Feedback -->
+          <div id="game-micro-feedback" class="text-center font-fun font-extrabold text-lg sm:text-xl h-8"></div>
+
+        </div>
+
+        <!-- Game End Screen (Hidden by default) -->
+        <div id="game-end-screen" class="hidden text-center py-6 space-y-5">
+          <div id="game-end-icon" class="text-7xl animate-bounce-soft">🎉</div>
+          <h4 class="font-fun text-3xl sm:text-4xl font-extrabold text-slate-900" id="game-end-title">Luar Biasa, Koki
+            Detektif!</h4>
+          <p class="text-base sm:text-lg md:text-xl text-slate-700 max-w-lg mx-auto font-semibold" id="game-end-desc">
+            Semua pesanan berhasil diselesaikan dengan cerdas!
+          </p>
+
+          <div class="bg-amber-100 border-2 border-amber-400 rounded-3xl p-6 max-w-sm mx-auto text-center shadow-md">
+            <span class="text-sm sm:text-base font-black text-amber-900 block">TOTAL SKOR GAME:</span>
+            <span id="game-final-score" class="font-fun font-black text-4xl sm:text-5xl text-amber-950">500</span>
+            <span class="text-sm sm:text-base text-amber-800 font-bold block mt-1">⭐ Poin ditambahkan ke akunmu!</span>
+          </div>
+
+          <div class="flex justify-center gap-4 pt-3">
+            <button onclick="startGamePlay()"
+              class="bg-purple-600 hover:bg-purple-700 text-white font-fun font-bold text-lg px-8 py-3.5 rounded-2xl shadow-md transition-all">
+              Main Lagi 🔄
+            </button>
+            <button onclick="closeMiniGame()"
+              class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-fun font-bold text-lg px-8 py-3.5 rounded-2xl transition-all">
+              Tutup Game
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-slate-200 py-7 px-4 text-center text-slate-600 mt-12">
+    <div class="max-w-4xl mx-auto space-y-2.5">
+      <div class="flex items-center justify-center gap-2 font-fun font-bold text-slate-800 text-base sm:text-lg">
+        <span>🔍 Media Pembelajaran Interaktif Matematika</span>
+        <span>•</span>
+        <span>Kelas 5 SD (Fase C)</span>
+      </div>
+      <p class="text-sm sm:text-base font-semibold text-slate-600">Materi: Pemecahan Masalah Soal Cerita Pecahan dengan
+        4 Langkah Polya</p>
+      <p class="text-xs sm:text-sm text-slate-500 font-medium">Dirancang untuk pembelajaran aktif, menyenangkan, dan
+        berpusat pada peserta didik.</p>
+    </div>
+  </footer>
+
+  <!-- ================= SCRIPT LOGIC ================= -->
+  <script>
+    /* -------------------------------------------------------------
+       1. GLOBAL STATE & SOUND SYNTHESIZER (WEB AUDIO API)
+       ------------------------------------------------------------- */
+    const state = {
+      studentName: 'Detektif Boni',
+      avatarEmoji: '🐱',
+      avatarLabel: 'Kucing Cerdik',
+      stars: 0,
+      soundEnabled: true,
+      currentQuizIndex: 0,
+      quizAnswers: {},
+      quizScore: 0,
+      completedObjectives: 0,
+      gameScore: 0,
+      gameLives: 3,
+      gameIndex: 0
+    };
+
+    // Web Audio Synthesizer for pleasant chimes without external audio file dependency
+    let audioCtx = null;
+    function getAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playSound(type) {
+      if (!state.soundEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        const now = ctx.currentTime;
+
+        if (type === 'correct' || type === 'win') {
+          // Cheerful chime: C5 -> E5 -> G5 -> C6
+          const freqs = [523.25, 659.25, 783.99, 1046.50];
+          freqs.forEach((f, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(f, now + i * 0.08);
+            gain.gain.setValueAtTime(0.2, now + i * 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.35);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now + i * 0.08);
+            osc.stop(now + i * 0.08 + 0.4);
+          });
+        } else if (type === 'wrong') {
+          // Friendly boing / try again sound
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(220, now);
+          osc.frequency.exponentialRampToValueAtTime(140, now + 0.25);
+          gain.gain.setValueAtTime(0.25, now);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.3);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.3);
+        } else if (type === 'pop' || type === 'click') {
+          // Soft click pop
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(600, now);
+          osc.frequency.exponentialRampToValueAtTime(300, now + 0.06);
+          gain.gain.setValueAtTime(0.15, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.06);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.07);
+        }
+      } catch (e) {
+        console.warn('Audio play prevented or unsupported:', e);
+      }
+    }
+
+    function toggleAudio() {
+      state.soundEnabled = !state.soundEnabled;
+      const btn = document.getElementById('sound-btn');
+      if (state.soundEnabled) {
+        btn.textContent = '🔊';
+        playSound('pop');
+      } else {
+        btn.textContent = '🔇';
+      }
+    }
+
+    /* FONT SIZE SCALING CONTROLLER (FOR ACCESSIBILITY & PROJECTION) */
+    function setFontSize(size) {
+      playSound('pop');
+      const root = document.documentElement;
+      root.classList.remove('font-normal', 'font-large', 'font-huge');
+
+      const btnNormal = document.getElementById('btn-font-normal');
+      const btnLarge = document.getElementById('btn-font-large');
+      const btnHuge = document.getElementById('btn-font-huge');
+
+      const resetBtn = (btn) => {
+        if (!btn) return;
+        btn.className = 'px-2 sm:px-2.5 py-0.5 rounded-lg bg-white hover:bg-amber-200 text-slate-700 font-fun font-bold text-xs sm:text-sm shadow-sm transition-all';
+      };
+      const activeBtn = (btn) => {
+        if (!btn) return;
+        btn.className = 'px-2 sm:px-2.5 py-0.5 rounded-lg bg-amber-500 text-white font-fun font-bold text-xs sm:text-sm shadow-sm transition-all';
+      };
+
+      resetBtn(btnNormal);
+      resetBtn(btnLarge);
+      resetBtn(btnHuge);
+
+      if (size === 'large') {
+        root.classList.add('font-large');
+        activeBtn(btnLarge);
+      } else if (size === 'huge') {
+        root.classList.add('font-huge');
+        activeBtn(btnHuge);
+      } else {
+        root.classList.add('font-normal');
+        activeBtn(btnNormal);
+      }
+
+      try {
+        localStorage.setItem('detektif_font_size', size);
+      } catch (e) { }
+    }
+
+    /* -------------------------------------------------------------
+       2. NAVIGATION SYSTEM
+       ------------------------------------------------------------- */
+    function navigateTo(pageId) {
+      playSound('pop');
+      // Hide all pages
+      document.querySelectorAll('.page-view').forEach(el => el.classList.add('hidden'));
+
+      // Show targeted page
+      const target = document.getElementById('page-' + pageId);
+      if (target) {
+        target.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Update Nav active style
+      document.querySelectorAll('.nav-btn, .nav-btn-mob').forEach(btn => {
+        if (btn.getAttribute('data-page') === pageId) {
+          btn.classList.add('bg-amber-200', 'text-amber-900', 'font-black');
+        } else {
+          btn.classList.remove('bg-amber-200', 'text-amber-900', 'font-black');
+        }
+      });
+
+      // Special page init logic
+      if (pageId === 'material') {
+        showStepDetail(1);
+      } else if (pageId === 'activity') {
+        switchLabCase(1);
+      } else if (pageId === 'quiz') {
+        renderQuizQuestion();
+      } else if (pageId === 'reflection') {
+        updateCertificateDisplay();
+      }
+    }
+
+    function startMission() {
+      navigateTo('objectives');
+    }
+
+    /* -------------------------------------------------------------
+       3. STUDENT PROFILE & AVATAR SELECTION
+       ------------------------------------------------------------- */
+    function selectAvatar(emoji, label) {
+      state.avatarEmoji = emoji;
+      state.avatarLabel = label;
+      playSound('pop');
+
+      document.querySelectorAll('.avatar-btn').forEach(b => {
+        b.classList.remove('border-amber-400', 'bg-amber-50', 'active');
+        b.classList.add('border-slate-200', 'bg-white');
+      });
+      event.currentTarget.classList.remove('border-slate-200', 'bg-white');
+      event.currentTarget.classList.add('border-amber-400', 'bg-amber-50', 'active');
+
+      document.getElementById('header-avatar').textContent = emoji;
+      updateCertificateDisplay();
+    }
+
+    function updateStudentName(val) {
+      const name = val.trim() ? val.trim() : 'Detektif Cilik';
+      state.studentName = name;
+      document.getElementById('header-name').textContent = name;
+      document.getElementById('student-name-obj').textContent = name;
+      document.getElementById('student-name-ref').textContent = name;
+      updateCertificateDisplay();
+    }
+
+    function addStars(amount) {
+      state.stars += amount;
+      document.getElementById('header-stars').textContent = state.stars;
+    }
+
+    /* -------------------------------------------------------------
+       4. MATERI 4 LANGKAH POLYA DETAILS
+       ------------------------------------------------------------- */
+    const stepDetails = {
+      1: {
+        title: 'Jurus 1: Temukan Jejak (Apa yang Diketahui?)',
+        color: 'sky',
+        icon: '🔎',
+        desc: 'Baca soal cerita seperti seorang detektif yang mencari petunjuk. Catat semua bilangan pecahan beserta benda yang dimaksudkan.',
+        example: 'Soal: "Ibu membeli 3/4 kg tepung. Digunakan 1/2 kg untuk membuat bolu."<br>👉 <strong>Diketahui:</strong><br>• Tepung awal = 3/4 kg<br>• Tepung terpakai = 1/2 kg',
+        tip: '💡 <em>Tips Detektif: Jangan lupakan satuannya! Apakah kg, liter, meter, atau loyang kue!</em>'
+      },
+      2: {
+        title: 'Jurus 2: Pecahkan Misteri (Apa yang Ditanyakan?)',
+        color: 'amber',
+        icon: '❓',
+        desc: 'Cari kalimat tanya di akhir cerita. Apa sebenarnya yang diminta oleh pembuat soal?',
+        example: 'Soal: "Berapakah sisa tepung terigu Ibu sekarang?"<br>👉 <strong>Ditanyakan:</strong><br>• Sisa tepung terigu (dalam kg)',
+        tip: '💡 <em>Tips Detektif: Kata tanya umum adalah "Berapa jumlah...", "Berapa sisa...", atau "Berapa bagian masing-masing...".</em>'
+      },
+      3: {
+        title: 'Jurus 3: Susun Taktik (Model Matematika & Hitung)',
+        color: 'emerald',
+        icon: '⚙️',
+        desc: 'Ubah cerita menjadi kalimat matematika dengan tanda tambah (+) atau kurang (-). Ingat! Jika penyebutnya berbeda, cari KPK-nya terlebih dahulu!',
+        example: '👉 <strong>Model Matematika:</strong> 3/4 - 1/2 = ...<br>Penyebut 4 dan 2 disamakan menjadi 4:<br>• 1/2 senilai dengan 2/4<br>• 3/4 - 2/4 = <strong>1/4 kg</strong>',
+        tip: '💡 <em>Tips Detektif: Hanya kurangkan atau jumlahkan pembilangnya. Penyebut yang sudah sama jangan diubah!</em>'
+      },
+      4: {
+        title: 'Jurus 4: Tulis Kesimpulan Kontekstual',
+        color: 'purple',
+        icon: '✅',
+        desc: 'Seorang detektif sejati tidak berhenti pada angka saja, melainkan menuliskan jawaban lengkap yang menjawab pertanyaan cerita.',
+        example: '👉 <strong>Kalimat Kesimpulan:</strong><br><span class="p-2 bg-purple-100 rounded-lg inline-block text-purple-900 font-bold mt-1">"Jadi, sisa tepung terigu yang dimiliki Ibu sekarang adalah 1/4 kg."</span>',
+        tip: '💡 <em>Tips Detektif: Mulailah dengan kata "Jadi,..." dan sertakan konteks pemilik serta satuan bendanya.</em>'
+      }
+    };
+
+    function showStepDetail(num) {
+      playSound('pop');
+      document.querySelectorAll('.step-tab').forEach((tab, i) => {
+        if (i + 1 === num) {
+          tab.classList.remove('border-slate-200', 'bg-white', 'text-slate-600');
+          tab.classList.add('border-sky-400', 'bg-sky-50', 'text-slate-900', 'font-extrabold');
+        } else {
+          tab.classList.add('border-slate-200', 'bg-white', 'text-slate-600');
+          tab.classList.remove('border-sky-400', 'bg-sky-50', 'text-slate-900', 'font-extrabold');
+        }
+      });
+
+      const d = stepDetails[num];
+      const box = document.getElementById('step-detail-container');
+      box.innerHTML = `
+        <div class="flex items-start gap-5">
+          <span class="text-5xl sm:text-6xl hidden sm:inline flex-shrink-0">${d.icon}</span>
+          <div class="space-y-4 w-full">
+            <h4 class="font-fun text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900">${d.title}</h4>
+            <p class="text-base sm:text-lg md:text-xl text-slate-800 font-semibold leading-relaxed">${d.desc}</p>
+            <div class="bg-white p-5 sm:p-6 rounded-2xl border-2 border-sky-200 text-base sm:text-lg md:text-xl text-slate-800 space-y-2 font-medium shadow-xs">
+              ${d.example}
+            </div>
+            <div class="text-sm sm:text-base md:text-lg font-bold text-sky-900 bg-sky-100/90 p-4 rounded-2xl border border-sky-300 shadow-xs">
+              ${d.tip}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    /* -------------------------------------------------------------
+       5. LAB KASUS INTERAKTIF
+       ------------------------------------------------------------- */
+    const labCases = {
+      1: {
+        titleBadge: 'STUDI KASUS 1: PENJUMLAHAN PECAHAN',
+        title: 'Pesta Kue Ulang Tahun Ibu',
+        icon: '🍕',
+        story: 'Ibu memiliki <span class="bg-amber-200 px-1.5 py-0.5 rounded font-bold text-amber-900">1/2 loyang</span> kue rasa cokelat di kulkas. Kemudian, Bibi membawakan lagi <span class="bg-sky-200 px-1.5 py-0.5 rounded font-bold text-sky-900">1/4 loyang</span> kue dengan rasa yang sama. Berapa loyang total kue yang dimiliki Ibu sekarang?',
+        known: '• Kue awal Ibu = 1/2 loyang<br>• Kue tambahan Bibi = 1/4 loyang',
+        asked: 'Total seluruh kue yang dimiliki Ibu sekarang (dalam satuan loyang).',
+        model: '1/2 + 1/4 = 2/4 + 1/4 = 3/4',
+        conclusion: '"Jadi, total kue yang dimiliki Ibu sekarang adalah <strong>3/4 loyang kue</strong>."',
+        visualTitle: 'Visualisasi Pecahan Kue',
+        svg: `
+          <circle cx="50" cy="50" r="40" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+          <path d="M 50 50 L 90 50 A 40 40 0 0 1 50 90 Z" fill="#FBBF24" stroke="#d97706" stroke-width="1.5"/>
+          <path d="M 50 50 L 50 90 A 40 40 0 0 1 10 50 Z" fill="#FBBF24" stroke="#d97706" stroke-width="1.5"/>
+          <path d="M 50 50 L 10 50 A 40 40 0 0 1 50 10 Z" fill="#38BDF8" stroke="#0284c7" stroke-width="1.5"/>
+          <circle cx="50" cy="50" r="4" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+        `
+      },
+      2: {
+        titleBadge: 'STUDI KASUS 2: PENGURANGAN PECAHAN',
+        title: 'Berbagi Jus Jeruk Segar',
+        icon: '🧃',
+        story: 'Paman memeras jeruk hingga menghasilkan <span class="bg-amber-200 px-1.5 py-0.5 rounded font-bold text-amber-900">3/4 teko</span> jus manis. Kakak meminum sebanyak <span class="bg-rose-200 px-1.5 py-0.5 rounded font-bold text-rose-900">1/2 teko</span> jus tersebut. Berapakah sisa jus jeruk yang masih ada di dalam teko?',
+        known: '• Jus jeruk awal Paman = 3/4 teko<br>• Jus yang diminum Kakak = 1/2 teko',
+        asked: 'Berapa sisa jus jeruk yang ada di dalam teko?',
+        model: '3/4 - 1/2 = 3/4 - 2/4 = 1/4',
+        conclusion: '"Jadi, sisa jus jeruk di dalam teko Paman sekarang adalah <strong>1/4 teko</strong>."',
+        visualTitle: 'Visualisasi Sisa Jus Jeruk',
+        svg: `
+          <rect x="25" y="15" width="50" height="70" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+          <!-- Remaining 1/4 juice -->
+          <rect x="25" y="67.5" width="50" height="17.5" rx="0" fill="#F97316" opacity="0.9"/>
+          <!-- Consumed 2/4 juice -->
+          <rect x="25" y="32.5" width="50" height="35" rx="0" fill="#fed7aa" opacity="0.4" stroke-dasharray="2 2"/>
+          <!-- Grid levels -->
+          <line x1="25" y1="32.5" x2="75" y2="32.5" stroke="#94a3b8" stroke-width="1"/>
+          <line x1="25" y1="50" x2="75" y2="50" stroke="#94a3b8" stroke-width="1"/>
+          <line x1="25" y1="67.5" x2="75" y2="67.5" stroke="#94a3b8" stroke-width="1"/>
+        `
+      }
+    };
+
+    function switchLabCase(num) {
+      playSound('pop');
+      document.getElementById('lab-btn-1').className = num === 1
+        ? 'lab-case-btn px-4 py-2 rounded-xl font-fun font-bold text-xs sm:text-sm bg-purple-600 text-white shadow'
+        : 'lab-case-btn px-4 py-2 rounded-xl font-fun font-bold text-xs sm:text-sm bg-slate-100 text-slate-600 hover:bg-purple-100';
+
+      document.getElementById('lab-btn-2').className = num === 2
+        ? 'lab-case-btn px-4 py-2 rounded-xl font-fun font-bold text-xs sm:text-sm bg-purple-600 text-white shadow'
+        : 'lab-case-btn px-4 py-2 rounded-xl font-fun font-bold text-xs sm:text-sm bg-slate-100 text-slate-600 hover:bg-purple-100';
+
+      const c = labCases[num];
+      document.getElementById('lab-case-icon').textContent = c.icon;
+      document.getElementById('lab-case-title-badge').textContent = c.titleBadge;
+      document.getElementById('lab-case-title').textContent = c.title;
+      document.getElementById('lab-case-story').innerHTML = c.story;
+      document.getElementById('lab-known-text').innerHTML = c.known;
+      document.getElementById('lab-asked-text').textContent = c.asked;
+      document.getElementById('lab-model-display').textContent = c.model;
+      document.getElementById('lab-conclusion-text').innerHTML = c.conclusion;
+      document.getElementById('lab-visual-title').textContent = c.visualTitle;
+      document.getElementById('lab-svg').innerHTML = c.svg;
+    }
+
+    /* -------------------------------------------------------------
+       6. KUIS EVALUASI (PG, BENAR-SALAH, MENCOCOKKAN KARTU)
+       ------------------------------------------------------------- */
+    const quizData = [
+      {
+        id: 1,
+        type: 'pg',
+        category: 'Pilihan Ganda (PG)',
+        badge: 'Operasi Hitung',
+        story: 'Pak Budi memiliki sebidang tanah. <strong>2/5 bagian</strong> ditanami pohon mangga dan <strong>1/3 bagian</strong> ditanami pohon rambutan. Berapakah total bagian tanah yang sudah ditanami pohon?',
+        question: 'Operasi hitung apa dan model matematika mana yang paling tepat untuk menyelesaikan soal di atas?',
+        options: [
+          { text: 'A. Pengurangan: 2/5 - 1/3', correct: false },
+          { text: 'B. Penjumlahan: 2/5 + 1/3', correct: true },
+          { text: 'C. Perkalian: 2/5 × 1/3', correct: false },
+          { text: 'D. Pengurangan: 1 - 2/5', correct: false },
+        ],
+        explanation: 'Kata kunci "total bagian yang sudah ditanami" menunjukkan kedua luas tanah digabungkan, sehingga operasi yang digunakan adalah <strong>penjumlahan (+)</strong>: 2/5 + 1/3.'
+      },
+      {
+        id: 2,
+        type: 'tf',
+        category: 'Benar / Salah',
+        badge: 'Identifikasi Soal',
+        story: 'Soal: "Siti memiliki pita sepanjang 7/8 meter. Ia memberikan 3/8 meter kepada adiknya. Berapa sisa pita Siti?"',
+        question: 'Pernyataan: "Informasi yang DITANYAKAN dalam soal tersebut adalah panjang pita mula-mula yang dimiliki Siti."',
+        correctAnswer: false, // Salah, karena yang ditanyakan adalah sisa pita
+        explanation: 'Pernyataan tersebut <strong>SALAH</strong>. Panjang mula-mula (7/8 meter) adalah informasi yang <em>DIKETAHUI</em>, sedangkan yang <em>DITANYAKAN</em> adalah <strong>sisa pita Siti</strong> setelah diberikan kepada adiknya.'
+      },
+      {
+        id: 3,
+        type: 'pg',
+        category: 'Pilihan Ganda (PG)',
+        badge: 'Kesimpulan Cerita',
+        story: 'Dayu memiliki tepung 5/6 kg. Ia menggunakan 2/6 kg untuk membuat kue dadar gulung. Setelah dihitung, 5/6 - 2/6 = 3/6 = 1/2 kg.',
+        question: 'Manakah kalimat KESIMPULAN yang paling lengkap dan sesuai dengan konteks cerita di atas?',
+        options: [
+          { text: 'A. Jadi, hasilnya adalah 1/2 kg.', correct: false },
+          { text: 'B. Jadi, tepung kue dadar gulung Dayu adalah 3/6 kg.', correct: false },
+          { text: 'C. Jadi, sisa tepung terigu yang dimiliki Dayu sekarang adalah 1/2 kg.', correct: true },
+          { text: 'D. Jadi, Dayu membeli lagi 1/2 kg tepung di warung.', correct: false }
+        ],
+        explanation: 'Kesimpulan yang baik harus menyebutkan konteks pemilik (Dayu), kondisi (sisa tepung), dan satuan yang jelas (1/2 kg).'
+      },
+      {
+        id: 4,
+        type: 'tf',
+        category: 'Benar / Salah',
+        badge: 'Menyamakan Penyebut',
+        story: 'Ali menghitung penjumlahan pecahan: <strong>1/2 + 1/3</strong>.<br>Ali langsung menjumlahkan pembilang dan penyebut sehingga memperoleh hasil <strong>2/5</strong>.',
+        question: 'Pernyataan: "Cara perhitungan Ali sudah benar karena langsung menjumlahkan atas dengan atas dan bawah dengan bawah."',
+        correctAnswer: false,
+        explanation: 'Pernyataan tersebut <strong>SALAH</strong>! Pecahan dengan penyebut berbeda (2 dan 3) harus disamakan terlebih dahulu penyebutnya menggunakan KPK (KPK dari 2 dan 3 adalah 6): 3/6 + 2/6 = 5/6, bukan 2/5!'
+      },
+      {
+        id: 5,
+        type: 'match',
+        category: 'Mencocokkan Kartu',
+        badge: '4 Langkah Super',
+        story: 'Pasangkan setiap cuplikan kalimat dari soal cerita berikut dengan kelompok langkah yang tepat!',
+        pairs: [
+          { item: 'Ayah membeli 3/4 kg buah apel di pasar.', label: 'DIKETAHUI' },
+          { item: 'Berapa sisa buah apel yang belum dimakan?', label: 'DITANYAKAN' },
+          { item: '3/4 - 1/4 = 2/4 = 1/2 kg', label: 'PENYELESAIAN' },
+          { item: 'Jadi, sisa buah apel Ayah adalah 1/2 kg.', label: 'KESIMPULAN' }
+        ],
+        explanation: 'Hebat! Kamu telah berhasil memetakan seluruh alur pemecahan soal cerita dengan 4 Langkah Polya secara tepat!'
+      }
+    ];
+
+    function renderQuizQuestion() {
+      const q = quizData[state.currentQuizIndex];
+      document.getElementById('quiz-current-num').textContent = state.currentQuizIndex + 1;
+      document.getElementById('quiz-total-num').textContent = quizData.length;
+      document.getElementById('quiz-progress-bar').style.width = ((state.currentQuizIndex + 1) / quizData.length * 100) + '%';
+
+      const feedbackBox = document.getElementById('quiz-feedback-box');
+      feedbackBox.className = 'hidden mt-6 rounded-3xl p-6 transition-all duration-300';
+      feedbackBox.innerHTML = '';
+
+      const container = document.getElementById('quiz-card');
+
+      if (q.type === 'pg') {
+        container.innerHTML = `
+          <div class="space-y-5">
+            <div class="flex items-center gap-2.5 flex-wrap">
+              <span class="bg-pink-100 text-pink-800 text-sm sm:text-base font-black px-4 py-1 rounded-full uppercase tracking-wide">${q.category}</span>
+              <span class="bg-slate-100 text-slate-700 text-sm sm:text-base font-bold px-3.5 py-1 rounded-full border border-slate-200">${q.badge}</span>
+            </div>
+            <div class="p-5 sm:p-6 rounded-3xl bg-amber-50/80 border-2 border-amber-300 text-lg sm:text-xl md:text-2xl text-slate-900 leading-relaxed font-semibold shadow-xs">
+              ${q.story}
+            </div>
+            <h3 class="font-fun font-extrabold text-xl sm:text-2xl md:text-3xl text-slate-900 leading-snug pt-1">${q.question}</h3>
+            
+            <div class="grid grid-cols-1 gap-3.5 pt-2">
+              ${q.options.map((opt, i) => `
+                <button onclick="handleSelectOption(${i})" class="quiz-option-btn text-left p-4 sm:p-5 rounded-2xl border-2 border-slate-200 bg-white hover:border-pink-500 hover:bg-pink-50/60 font-bold text-slate-900 text-base sm:text-lg md:text-xl transition-all flex items-center justify-between group shadow-xs">
+                  <span>${opt.text}</span>
+                  <span class="opacity-0 group-hover:opacity-100 text-pink-600 font-extrabold text-base transition-opacity">Pilih &rarr;</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } else if (q.type === 'tf') {
+        container.innerHTML = `
+          <div class="space-y-5">
+            <div class="flex items-center gap-2.5 flex-wrap">
+              <span class="bg-pink-100 text-pink-800 text-sm sm:text-base font-black px-4 py-1 rounded-full uppercase tracking-wide">${q.category}</span>
+              <span class="bg-slate-100 text-slate-700 text-sm sm:text-base font-bold px-3.5 py-1 rounded-full border border-slate-200">${q.badge}</span>
+            </div>
+            <div class="p-5 sm:p-6 rounded-3xl bg-sky-50/80 border-2 border-sky-300 text-lg sm:text-xl md:text-2xl text-slate-900 leading-relaxed font-semibold shadow-xs">
+              ${q.story}
+            </div>
+            <h3 class="font-fun font-extrabold text-xl sm:text-2xl md:text-3xl text-slate-900 leading-snug pt-1">${q.question}</h3>
+            
+            <div class="grid grid-cols-2 gap-4 pt-3">
+              <button onclick="handleSelectTF(true)" class="quiz-tf-btn p-5 sm:p-6 rounded-3xl border-3 border-emerald-400 bg-emerald-50 hover:bg-emerald-100 font-fun font-black text-emerald-950 text-2xl sm:text-3xl md:text-4xl transition-all flex flex-col items-center gap-2 shadow-md">
+                <span class="text-4xl sm:text-5xl">👍</span>
+                <span>BENAR</span>
+              </button>
+              <button onclick="handleSelectTF(false)" class="quiz-tf-btn p-5 sm:p-6 rounded-3xl border-3 border-rose-400 bg-rose-50 hover:bg-rose-100 font-fun font-black text-rose-950 text-2xl sm:text-3xl md:text-4xl transition-all flex flex-col items-center gap-2 shadow-md">
+                <span class="text-4xl sm:text-5xl">👎</span>
+                <span>SALAH</span>
+              </button>
+            </div>
+          </div>
+        `;
+      } else if (q.type === 'match') {
+        container.innerHTML = `
+          <div class="space-y-5">
+            <div class="flex items-center gap-2.5 flex-wrap">
+              <span class="bg-pink-100 text-pink-800 text-sm sm:text-base font-black px-4 py-1 rounded-full uppercase tracking-wide">${q.category}</span>
+              <span class="bg-slate-100 text-slate-700 text-sm sm:text-base font-bold px-3.5 py-1 rounded-full border border-slate-200">${q.badge}</span>
+            </div>
+            <div class="p-4 sm:p-5 rounded-2xl bg-purple-50/70 border-2 border-purple-200 text-base sm:text-lg md:text-xl text-slate-900 leading-relaxed font-semibold">
+              ${q.story}
+            </div>
+            <div class="space-y-3.5 pt-1">
+              ${q.pairs.map((pair, i) => `
+                <div class="p-4 sm:p-5 rounded-2xl border-2 border-purple-200 bg-purple-50/50 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-xs">
+                  <span class="text-base sm:text-lg md:text-xl font-bold text-slate-900 flex-1">"${pair.item}"</span>
+                  <select id="match-select-${i}" class="px-4 py-2.5 rounded-xl border-2 border-purple-300 bg-white font-fun font-bold text-sm sm:text-base text-purple-900 focus:outline-none focus:border-purple-500 shadow-xs">
+                    <option value="">-- Pilih Langkah --</option>
+                    <option value="DIKETAHUI">1. DIKETAHUI</option>
+                    <option value="DITANYAKAN">2. DITANYAKAN</option>
+                    <option value="PENYELESAIAN">3. PENYELESAIAN</option>
+                    <option value="KESIMPULAN">4. KESIMPULAN</option>
+                  </select>
+                </div>
+              `).join('')}
+            </div>
+            <div class="pt-2 text-right">
+              <button onclick="handleCheckMatch()" class="bg-pink-600 hover:bg-pink-700 text-white font-fun font-extrabold text-base sm:text-lg md:text-xl px-8 py-3.5 rounded-2xl shadow-md transition-all">
+                Periksa Pasangan Kartu ✓
+              </button>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function handleSelectOption(chosenIndex) {
+      const q = quizData[state.currentQuizIndex];
+      const isCorrect = q.options[chosenIndex].correct;
+      processQuizAnswer(isCorrect, q.explanation);
+    }
+
+    function handleSelectTF(userChoice) {
+      const q = quizData[state.currentQuizIndex];
+      const isCorrect = userChoice === q.correctAnswer;
+      processQuizAnswer(isCorrect, q.explanation);
+    }
+
+    function handleCheckMatch() {
+      const q = quizData[state.currentQuizIndex];
+      let allCorrect = true;
+      for (let i = 0; i < q.pairs.length; i++) {
+        const val = document.getElementById(`match-select-${i}`).value;
+        if (val !== q.pairs[i].label) {
+          allCorrect = false;
+          break;
+        }
+      }
+      if (allCorrect) {
+        processQuizAnswer(true, q.explanation);
+      } else {
+        processQuizAnswer(false, 'Periksa kembali pasangan kartu! Ingat: Kalimat tanya adalah DITANYAKAN, angka awal adalah DIKETAHUI, dan kalimat dengan kata "Jadi..." adalah KESIMPULAN.');
+      }
+    }
+
+    function processQuizAnswer(isCorrect, explanation) {
+      const feedbackBox = document.getElementById('quiz-feedback-box');
+      feedbackBox.classList.remove('hidden');
+
+      if (isCorrect) {
+        playSound('correct');
+        addStars(20);
+        triggerConfetti();
+        state.quizScore += 20;
+
+        feedbackBox.className = 'mt-6 rounded-3xl p-6 sm:p-7 border-3 border-emerald-400 bg-emerald-50 text-emerald-950 badge-pop shadow-md';
+        feedbackBox.innerHTML = `
+          <div class="flex items-start gap-4">
+            <span class="text-4xl sm:text-5xl flex-shrink-0">🎉</span>
+            <div class="space-y-3 flex-1">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <h4 class="font-fun text-xl sm:text-2xl md:text-3xl font-black text-emerald-950">LUAR BIASA! JAWABANMU BENAR! ⭐</h4>
+                <span class="bg-emerald-200 text-emerald-900 text-sm sm:text-base font-black px-3.5 py-1 rounded-full">+20 Poin</span>
+              </div>
+              <p class="text-base sm:text-lg md:text-xl text-emerald-900 font-semibold leading-relaxed">${explanation}</p>
+              <div class="pt-3 flex justify-end">
+                <button onclick="nextQuizQuestion()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-fun font-bold text-base sm:text-lg px-7 py-3 rounded-2xl shadow-md transition-all flex items-center gap-2">
+                  <span>${state.currentQuizIndex < quizData.length - 1 ? 'Soal Berikutnya' : 'Lihat Hasil & Refleksi'}</span> <span>&rarr;</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        playSound('wrong');
+        feedbackBox.className = 'mt-6 rounded-3xl p-6 sm:p-7 border-3 border-amber-400 bg-amber-50 text-amber-950 badge-pop shadow-md';
+        feedbackBox.innerHTML = `
+          <div class="flex items-start gap-4">
+            <span class="text-4xl sm:text-5xl flex-shrink-0">💪</span>
+            <div class="space-y-3 flex-1">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <h4 class="font-fun text-xl sm:text-2xl md:text-3xl font-black text-amber-950">HAMPIR TEPAT! JANGAN MENYERAH!</h4>
+                <span class="bg-amber-200 text-amber-900 text-sm sm:text-base font-black px-3.5 py-1 rounded-full">Yuk Coba Lagi</span>
+              </div>
+              <p class="text-base sm:text-lg md:text-xl text-amber-950 font-semibold leading-relaxed">${explanation}</p>
+              <div class="pt-3 flex items-center justify-between flex-wrap gap-3">
+                <button onclick="renderQuizQuestion()" class="text-amber-900 hover:text-amber-950 font-fun font-bold text-sm sm:text-base underline">
+                  🔄 Coba Jawab Ulang
+                </button>
+                <button onclick="nextQuizQuestion()" class="bg-amber-600 hover:bg-amber-700 text-white font-fun font-bold text-sm sm:text-base px-6 py-2.5 rounded-xl shadow-md transition-all flex items-center gap-1.5">
+                  <span>Lewati ke Soal Berikutnya</span> <span>&rarr;</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function nextQuizQuestion() {
+      if (state.currentQuizIndex < quizData.length - 1) {
+        state.currentQuizIndex++;
+        renderQuizQuestion();
+      } else {
+        // Quiz completed
+        playSound('win');
+        triggerConfetti();
+        navigateTo('reflection');
+      }
+    }
+
+    /* -------------------------------------------------------------
+       7. MINI-GAME PECAHAN: "TOKO ROTI DETEKTIF"
+       ------------------------------------------------------------- */
+    const gameOrders = [
+      {
+        customer: '🐰 Kelinci Lulu',
+        avatar: '🐰',
+        order: 'Aku punya 1/4 loyang kue keju, lalu membeli 2/4 loyang lagi. Berapa loyang total kueku?',
+        options: ['2/4 loyang', '3/4 loyang', '3/8 loyang', '1/2 loyang'],
+        correct: 1
+      },
+      {
+        customer: '🐻 Beruang Kiko',
+        avatar: '🐻',
+        order: 'Ada 4/5 potong madu di toples. Aku sudah memakan 1/5 potong. Berapa sisa maduku?',
+        options: ['3/5 potong', '5/5 potong', '3/10 potong', '1/5 potong'],
+        correct: 0
+      },
+      {
+        customer: '🦊 Rubah Rino',
+        avatar: '🦊',
+        order: 'Ibu memberi 1/2 loyang kue bolu, Bibi memberi 1/4 loyang. Samakan penyebut jadi per empat, berapa totalnya?',
+        options: ['2/6 loyang', '3/4 loyang', '2/4 loyang', '1 loyang'],
+        correct: 1
+      },
+      {
+        customer: '🐱 Kucing Miu',
+        avatar: '🐱',
+        order: 'Ada 6/7 botol susu ikan. Miu meminum 4/7 botol. Berapakah sisa susunya?',
+        options: ['10/7 botol', '1/7 botol', '2/7 botol', '2/14 botol'],
+        correct: 2
+      },
+      {
+        customer: '🦁 Singa Leo',
+        avatar: '🦁',
+        order: 'Leo membawa 1/3 semangka dan 1/3 melon. Jika digabungkan, berapa bagian buahnya?',
+        options: ['2/3 bagian', '2/6 bagian', '1 bagian', '3/3 bagian'],
+        correct: 0
+      }
+    ];
+
+    function openMiniGame() {
+      playSound('pop');
+      document.getElementById('game-modal').classList.remove('hidden');
+      document.getElementById('game-start-screen').classList.remove('hidden');
+      document.getElementById('game-play-screen').classList.add('hidden');
+      document.getElementById('game-end-screen').classList.add('hidden');
+    }
+
+    function closeMiniGame() {
+      playSound('pop');
+      document.getElementById('game-modal').classList.add('hidden');
+    }
+
+    function toggleExternalGameInput() {
+      playSound('pop');
+      const box = document.getElementById('external-game-box');
+      if (box) {
+        box.classList.toggle('hidden');
+      }
+    }
+
+    function openExternalGame() {
+      playSound('pop');
+      const urlInput = document.getElementById('external-game-url');
+      const url = (urlInput && urlInput.value.trim()) ? urlInput.value.trim() : 'https://wordwall.net/id-id/community/soal-cerita-pecahan';
+      window.open(url, '_blank');
+    }
+
+    function startGamePlay() {
+      playSound('pop');
+      state.gameScore = 0;
+      state.gameLives = 3;
+      state.gameIndex = 0;
+
+      document.getElementById('game-start-screen').classList.add('hidden');
+      document.getElementById('game-end-screen').classList.add('hidden');
+      document.getElementById('game-play-screen').classList.remove('hidden');
+
+      renderGameOrder();
+    }
+
+    function renderGameOrder() {
+      const g = gameOrders[state.gameIndex];
+      document.getElementById('game-level-num').textContent = state.gameIndex + 1;
+      document.getElementById('game-score-num').textContent = state.gameScore;
+      document.getElementById('game-lives-display').textContent = '❤️ '.repeat(state.gameLives);
+
+      document.getElementById('game-customer-avatar').textContent = g.avatar;
+      document.getElementById('game-customer-name').textContent = `${g.customer} memesan:`;
+      document.getElementById('game-order-text').textContent = `"${g.order}"`;
+      document.getElementById('game-micro-feedback').textContent = '';
+
+      const container = document.getElementById('game-options-container');
+      container.innerHTML = g.options.map((opt, i) => `
+        <button onclick="checkGameAnswer(${i})" class="game-opt-btn p-4 sm:p-5 rounded-2xl border-2 border-purple-300 bg-white hover:border-purple-500 hover:bg-purple-50 font-fun font-extrabold text-slate-900 text-lg sm:text-xl md:text-2xl transition-all shadow-md active:scale-98">
+          ${opt}
+        </button>
+      `).join('');
+    }
+
+    function checkGameAnswer(chosen) {
+      const g = gameOrders[state.gameIndex];
+      const fb = document.getElementById('game-micro-feedback');
+
+      if (chosen === g.correct) {
+        playSound('correct');
+        state.gameScore += 100;
+        addStars(10);
+        fb.className = 'text-center font-fun font-extrabold text-base sm:text-lg md:text-xl h-8 text-emerald-600';
+        fb.textContent = '✅ PESANAN TEPAT! (+100 Poin)';
+
+        setTimeout(() => {
+          if (state.gameIndex < gameOrders.length - 1) {
+            state.gameIndex++;
+            renderGameOrder();
+          } else {
+            finishGame(true);
+          }
+        }, 800);
+      } else {
+        playSound('wrong');
+        state.gameLives--;
+        fb.className = 'text-center font-fun font-extrabold text-base sm:text-lg md:text-xl h-8 text-rose-600';
+        fb.textContent = '❌ Kurang tepat! Coba hitung lagi!';
+        document.getElementById('game-lives-display').textContent = '❤️ '.repeat(Math.max(0, state.gameLives));
+
+        if (state.gameLives <= 0) {
+          setTimeout(() => {
+            finishGame(false);
+          }, 800);
+        }
+      }
+    }
+
+    function finishGame(isWin) {
+      document.getElementById('game-play-screen').classList.add('hidden');
+      document.getElementById('game-end-screen').classList.remove('hidden');
+
+      if (isWin) {
+        playSound('win');
+        triggerConfetti();
+        document.getElementById('game-end-icon').textContent = '🎉';
+        document.getElementById('game-end-title').textContent = 'Luar Biasa, Koki Detektif!';
+        document.getElementById('game-end-desc').textContent = 'Semua pesanan pelanggan berhasil kamu racik dengan pecahan yang sempurna!';
+      } else {
+        playSound('wrong');
+        document.getElementById('game-end-icon').textContent = '🧁';
+        document.getElementById('game-end-title').textContent = 'Game Selesai!';
+        document.getElementById('game-end-desc').textContent = 'Jangan sedih, kamu sudah berusaha dengan sangat baik! Ayo coba lagi untuk skor lebih tinggi!';
+      }
+      document.getElementById('game-final-score').textContent = state.gameScore;
+    }
+
+    /* -------------------------------------------------------------
+       8. REFLEKSI DIRI & SERTIFIKAT
+       ------------------------------------------------------------- */
+    function setFeeling(label, emoji) {
+      playSound('pop');
+      document.getElementById('feeling-status').textContent = `Pilihanmu: ${label} ${emoji}`;
+    }
+
+    function updateCertificateDisplay() {
+      const nameEl = document.getElementById('cert-student-name');
+      if (nameEl) nameEl.textContent = state.studentName;
+
+      const dateEl = document.getElementById('cert-date');
+      if (dateEl) {
+        const today = new Date();
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        dateEl.textContent = today.toLocaleDateString('id-ID', options);
+      }
+    }
+
+    /* -------------------------------------------------------------
+       9. CONFETTI EFFECT ANIMATION (CANVAS)
+       ------------------------------------------------------------- */
+    function triggerConfetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const pieces = [];
+      const colors = ['#FBBF24', '#F97316', '#38BDF8', '#10B981', '#EC4899', '#8B5CF6'];
+
+      for (let i = 0; i < 70; i++) {
+        pieces.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height * 0.4,
+          size: Math.random() * 8 + 5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          vx: (Math.random() - 0.5) * 6,
+          vy: Math.random() * 4 + 3,
+          rot: Math.random() * 360,
+          rotSpeed: (Math.random() - 0.5) * 10
+        });
+      }
+
+      let frames = 0;
+      function render() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        pieces.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rot += p.rotSpeed;
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rot * Math.PI) / 180);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+          ctx.restore();
+        });
+
+        frames++;
+        if (frames < 90) {
+          requestAnimationFrame(render);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+      render();
+    }
+
+    // Initialize default page, font size & state
+    window.addEventListener('DOMContentLoaded', () => {
+      try {
+        const savedFontSize = localStorage.getItem('detektif_font_size') || 'normal';
+        setFontSize(savedFontSize);
+      } catch (e) {
+        setFontSize('normal');
+      }
+      navigateTo('home');
+      updateCertificateDisplay();
+    });
+  </script>
+</body>
+
+</html>
