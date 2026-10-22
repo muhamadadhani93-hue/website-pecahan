@@ -73,7 +73,9 @@ Media pembelajaran interaktif berbasis web (HTML5, Tailwind CSS, Vanilla JS) yan
   - 3 Aturan emas berdiskusi dan tombol konfirmasi penyelesaian (+20 Poin ⭐).
 - **🏆 KUIS**:
   - 5 Soal lisensi detektif (Pilihan Ganda, Benar/Salah, dan Menjodohkan Kartu Polya).
-  - Umpan balik langsung dengan suara melodis dan konfeti.
+  - Bobot: 20 Poin per soal (Total 100 Poin maksimal).
+  - Sistem 3 Nyawa (❤️❤️❤️): jika salah 3 kali, nyawa habis, soal berikutnya tidak ditampilkan, dan skor langsung dihitung dari jawaban yang benar.
+  - Ulasan & Penjelasan Refleksi Soal: setiap soal yang dijawab salah disertai penjelasan konsep dan analisis jurus Polya secara mendalam.
 - **💭 REFLEKSI**:
   - Jurnal refleksi emotif (pilihan emoji perasaan belajar).
   - Pilihan bagian yang paling membutuhkan ketelitian.
